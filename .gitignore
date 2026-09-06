@@ -35,3 +35,30 @@ Chatbot/eval_full_graded*.json
 Chatbot/consistency_results.jsonl
 Chatbot/consistency_table.csv
 consistency_run.log
+
+# Railway credentials — deploy/railway-deploy.sh reads the token from this file
+# so it never has to be typed into a shell command, a chat window, or a commit.
+deploy/.railway-token
+*.railway-token
+
+# The two Discover retrieval sidecars ARE COMMITTED (operator decision
+# 2026-09-04, WP-D10 §8 option 1): the deployed `discover-api` has no volume
+# and reads Insights/metainsights/ straight from git, and since WP-D10 the
+# decompose half (74 MB .npy + 7 MB .json.gz) fits under GitHub's 100 MB
+# per-file limit — committing it is what turns question decomposition ON in
+# production. The committed files are the WP-D10 spellings:
+#   retrieval_corpus.json.gz / .npy / _stamp.json
+#   decompose_corpus.json.gz / .npy / _stamp.json
+# Each mining rebuild re-commits ~80 MB; if mining becomes frequent, move the
+# sidecars to a fetched artifact instead.
+#
+# Only the superseded pre-D10 plain-JSON spellings stay ignored, so a stale
+# fp32-era record file left in a mirror cannot be committed by accident.
+Insights/metainsights/retrieval_corpus.json
+Insights/metainsights/decompose_corpus.json
+retrieval_corpus.json
+decompose_corpus.json
+
+# The resumable partial embedding cache phase5f writes while it runs, and
+# removes when the build completes. Present only after a killed build.
+Insights/metainsights/decompose_corpus.partial.npz
