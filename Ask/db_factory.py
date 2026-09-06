@@ -85,19 +85,53 @@ VIEWS_DDL_PATH = Path(__file__).parent / "sql" / "create_views.sql"
 
 
 def _seed_views(adapter) -> list[str]:
-    """Create the v_* analytical views, and prove each one is queryable.
+    """Use the shipped v_* views if the database has them; otherwise create them.
 
-    The views are NOT in the shipped .duckdb (19 tables, no views) and cannot be
-    added to it — it is opened read-only, on Drive, deliberately. They are
-    created in the adapter's writable in-memory catalog instead, where their
-    unqualified base-table references resolve through search_path into the
-    attached file. Byte-identical to the supplied Data/create_views.sql.
+    ORIGINALLY the views were never in the .duckdb — it shipped 19 tables and no
+    views — so they had to be built in the adapter's writable in-memory catalog,
+    where their unqualified base-table references resolve through search_path
+    into the attached read-only file.
+
+    That is no longer always true. The upstream warehouse now MATERIALISES these
+    relations into the artifact (v_activity_base, v_asset, v_exp, v_plan,
+    v_progress, v_voucher, v_approval as tables, with v_activity a view over
+    them). Two things follow, and both matter:
+
+    1. Re-creating them in memory SHADOWS the shipped ones — search_path puts
+       `memory.main` first — so all of that precomputation is discarded and the
+       whole join chain is rebuilt on every query. v_activity alone is
+       referenced about 324 times by the query catalogue, and v_asset and
+       v_progress each join it again.
+
+    2. The DDL in this repository is pinned to an OLDER warehouse schema. Against
+       an artifact built by the current pipeline it does not merely lose the
+       precomputation, it FAILS TO BIND:
+
+           BinderException: Table "aa" does not have a column named
+           "main_asset_category"
+
+       because those four main_asset_* fields now live on planned_activity
+       rather than activity_asset. That aborted a production deployment; the
+       container exited 3 and the ECS circuit breaker rolled the service back.
+
+    So: if the attached database already provides every view, trust it and do not
+    execute the DDL at all. All-or-nothing deliberately — a partial overlay would
+    silently mix a stale in-memory view with a shipped one and be harder to
+    reason about than either extreme.
 
     Returns the view names that exist afterwards. A missing DDL file is fatal
-    rather than degraded: every one of the 346 catalogue queries reads a view, so
-    a backend that boots without them answers nothing and would fail 346 times at
-    query time instead of once here.
+    rather than degraded ONLY when the DDL is actually needed: every one of the
+    346 catalogue queries reads a view, so a backend that boots without them
+    answers nothing and would fail 346 times at query time instead of once here.
     """
+    shipped = set(adapter.data_relations())
+    if all(view in shipped for view in VIEWS):
+        # Prove they SELECT before claiming success, exactly as the create path
+        # does below: binding is not evidence that a view reads.
+        for view in VIEWS:
+            adapter.execute(f"SELECT * FROM {view} LIMIT 0")
+        return sorted(VIEWS)
+
     if not VIEWS_DDL_PATH.exists():
         raise RuntimeError(
             f"DB_ENGINE=duckdb_file but {VIEWS_DDL_PATH} is missing. Every "
