@@ -991,6 +991,26 @@ FAMILY_DESCRIPTIONS: dict[str, dict] = {
         "members": ['PLU-009'],
     },
 
+    'rwi_001__relative_wealth_index': {
+        "desc": 'LOOKS UP: What is the Relative Wealth Index (RWI) score of a given gram panchayat. Returns rwi_score. One row per matching record. Filterable by district, block, GP; answers state-wide when no place is named — one entry serves every scope. Caveat: The Relative Wealth Index (RWI) is provided by Meta Data for Good calibrated at 2.4km resolution and aggregated to GP boundaries.',
+        "members": ['RWI-001'],
+    },
+
+    'rwi_002__relative_wealth_index': {
+        "desc": "RANKS: Which Gram Panchayats have the highest Relative Wealth Index (RWI) in a given district/a given block. Returns rwi_score. One row per matching record. A top-N list, highest first; $top_n = 1 answers 'which is the single highest/lowest'. Filterable by district, block; answers state-wide when no place is named — one entry serves every scope. Caveat: Ranks Gram Panchayats by Relative Wealth Index (RWI) in descending order.",
+        "members": ['RWI-002'],
+    },
+
+    'rwi_003__relative_wealth_index': {
+        "desc": "RANKS: Which Gram Panchayats have the lowest Relative Wealth Index (RWI) in a given district/a given block. Returns rwi_score. One row per matching record. A top-N list, lowest first; $top_n = 1 answers 'which is the single highest/lowest'. Filterable by district, block; answers state-wide when no place is named — one entry serves every scope. Caveat: Ranks Gram Panchayats by Relative Wealth Index (RWI) in ascending order to identify economically vulnerable communities.",
+        "members": ['RWI-003'],
+    },
+
+    'rwi_004__relative_wealth_index': {
+        "desc": 'TOTALS: What is the average Relative Wealth Index (RWI) across Gram Panchayats in a given district/a given block. Returns geography, avg_rwi_score, min_rwi_score, max_rwi_score, total_gps. A single summary row. Filterable by district, block; answers state-wide when no place is named — one entry serves every scope. Caveat: Summarizes average, minimum, and maximum Relative Wealth Index (RWI) for the selected geographic region.',
+        "members": ['RWI-004'],
+    },
+
     'san_001__administrative_approval': {
         "desc": 'COUNTS: How many activities in a given gram panchayat received administrative approval in a given year. Returns admin_approved_activities, total_activities, pct_approved. A single summary row. Restricted to activities that have an administrative approval (17% of them). Filterable by district, block, GP; answers state-wide when no place is named — one entry serves every scope. Caveat: There is no approval-date or approval-flag column.',
         "members": ['SAN-001'],

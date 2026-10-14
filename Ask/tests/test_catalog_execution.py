@@ -70,7 +70,7 @@ class CatalogueShapeTests(unittest.TestCase):
     """Checks that need no database."""
 
     def test_the_catalogue_holds_every_answerable_workbook_question(self):
-        self.assertEqual(len(TEMPLATE_CATALOG), 346)
+        self.assertEqual(len(TEMPLATE_CATALOG), len(_ORACLE))
         self.assertEqual(set(TEMPLATE_CATALOG), set(_ORACLE))
 
     def test_the_oracle_binds_exactly_the_slots_each_template_declares(self):

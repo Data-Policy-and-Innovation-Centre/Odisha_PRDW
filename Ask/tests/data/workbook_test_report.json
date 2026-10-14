@@ -2301,6 +2301,45 @@
   "rows": 20,
   "status": "PASS"
  },
+ "RWI-001": {
+  "answerable": "Yes",
+  "params": {
+   "block_name": null,
+   "district_name": null,
+   "gp_name": "Bandhpali"
+  },
+  "rows": 1,
+  "status": "PASS"
+ },
+ "RWI-002": {
+  "answerable": "Yes",
+  "params": {
+   "block_name": null,
+   "district_name": "Bargarh",
+   "top_n": 10
+  },
+  "rows": 4,
+  "status": "PASS"
+ },
+ "RWI-003": {
+  "answerable": "Yes",
+  "params": {
+   "block_name": null,
+   "district_name": "Bargarh",
+   "top_n": 10
+  },
+  "rows": 4,
+  "status": "PASS"
+ },
+ "RWI-004": {
+  "answerable": "Yes",
+  "params": {
+   "block_name": null,
+   "district_name": "Bargarh"
+  },
+  "rows": 1,
+  "status": "PASS"
+ },
  "SAN-001": {
   "answerable": "Partial",
   "params": {

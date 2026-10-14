@@ -109,7 +109,7 @@ def text(value) -> str:
 # duplicated there, and none maps to two GPs. Replace this with the plain
 # `v.gp_lgd_code = $gp_name` the day v_asset exposes the column.
 
-VIEWS_WITH_GP_CODE = {"v_activity", "v_plan", "v_voucher", "v_approval", "gram_panchayat"}
+VIEWS_WITH_GP_CODE = {"v_activity", "v_plan", "v_voucher", "v_approval", "gram_panchayat", "v_rwi"}
 VIEWS_WITHOUT_GP_CODE = {"v_asset", "v_progress"}
 
 _SQL_KEYWORDS = {

@@ -268,3 +268,16 @@ CREATE OR REPLACE VIEW v_voucher AS
 SELECT v.*, g.gp_name, g.block_name, g.zp_name AS district_name
 FROM voucher v
 JOIN gram_panchayat g ON g.gp_lgd_code = v.gp_lgd_code;
+
+-- ------------------------------------------------------------
+-- v_rwi : Gram Panchayat Relative Wealth Index (RWI) estimates.
+-- ------------------------------------------------------------
+CREATE OR REPLACE VIEW v_rwi AS
+SELECT
+    r.gp_lgd_code,
+    g.gp_name,
+    g.zp_name AS district_name,
+    g.block_name,
+    r.rwi_score
+FROM dim_rwi r
+JOIN gram_panchayat g ON r.gp_lgd_code = g.gp_lgd_code;

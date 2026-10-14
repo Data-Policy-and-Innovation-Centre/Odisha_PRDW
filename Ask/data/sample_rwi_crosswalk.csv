@@ -1,0 +1,21 @@
+lgd_code,sample_gp,district,block,rwi_code,rwi_gp,rwi_block,rwi_score,match_status
+116397,Bandhpali,Bargarh,Barpali,15050016,Bandhapali,Barpali,-0.1989,Fuzzy (109%)
+116400,Bhatigaon,Bargarh,Barpali,15050004,Bhatigaon,Barpali,-0.1557,Exact
+116438,Bheden,Bargarh,Bheden,15060001,Bheden,Bheden,-0.1619,Exact
+116350,Hirlipali,Bargarh,Attabira,15010003,Hirlipali,Atabira,-0.113,Exact
+116936,Dadhapatna,Cuttack,Baranga,3120001,Dadhapatna,Baranga,0.3038,Exact
+117153,Govindapur,Cuttack,Tangi Choudwar,3090012,Gobindpur,Tangi Choudwar,-0.2063,Fuzzy (99%)
+117951,Biswamathpur,Ganjam,Rangeilunda,5020014,Biswanathpur,Rangeilunda,0.1853,Fuzzy (106%)
+117835,Chikilli,Ganjam,Khallikote,5070020,Chikili,Khallikote,-0.0983,Fuzzy (108%)
+275075,Mendarajpur,Ganjam,Rangeilunda,5020029,Mandrajpur,Rangeilunda,-0.1128,Fuzzy (100%)
+118012,Sharagada,Ganjam,Sheragada,5150014,Sheragad,Sheragada,0.0399,Fuzzy (97%)
+118939,Dutimendi,Kandhamal,Khajuripada,10070013,Dutimendi,Khajuripada,-0.4409,Exact
+119598,Andhrua,Khordha,Bhubaneswar,20020007,Andharua,Bhubaneswar,0.3496,Fuzzy (108%)
+119599,Barimunda,Khordha,Bhubaneswar,20020013,Barimunda,Bhubaneswar,0.7496,Exact
+119605,Itipur,Khordha,Bhubaneswar,20020015,Itipur,Bhubaneswar,0.5215,Exact
+119717,Boipariguda,Koraput,Boipariguda,8120005,Boipariguda,Boipariguda,-0.3277,Exact
+119862,Laxmipur,Koraput,Laxmipur,8090012,Laxmipur,Laxmipur,-0.2764,Exact
+119936,Kalimela,Malkangiri,Kalimela,25040007,Kalimela,Kalimela,-0.1305,Exact
+121162,Kalyansinghpur,Rayagada,Kalyansingpur,27070011,Kalyansinghpur,K.Singpur,-0.3609,Exact
+121663,Haldikudar,Sundargarh,Lahunipara,13170012,Haladikudar,Lahunipada,-0.356,Fuzzy (95%)
+121526,Karuabahal,Sundargarh,Balisankara,13080013,Karuabahal,Balisankara,-0.3626,Exact
