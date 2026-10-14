@@ -1,6 +1,6 @@
 import { Landmark } from "lucide-react";
 
-type Mode = "ask" | "discover";
+export type Mode = "ask" | "discover" | "catalogue";
 
 interface AppHeaderProps {
   activeView: Mode;
@@ -12,6 +12,7 @@ interface AppHeaderProps {
 const navItems: { id: Mode; label: string }[] = [
   { id: "ask", label: "Ask" },
   { id: "discover", label: "Discover" },
+  { id: "catalogue", label: "Catalogue" },
 ];
 
 export function AppHeader({ activeView, onViewChange }: AppHeaderProps) {

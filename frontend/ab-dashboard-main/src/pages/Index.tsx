@@ -5,11 +5,10 @@ import {
   resetContext,
 } from "@/services/api";
 import { ChatArea } from "@/components/chat/ChatArea";
-import { AppHeader } from "@/components/layout/AppHeader";
+import { AppHeader, type Mode as ActiveView } from "@/components/layout/AppHeader";
 import { AnomaliesView } from "@/components/insights/AnomaliesView";
+import { CatalogueView } from "@/components/catalogue/CatalogueView";
 import type { ContextFrame, Message } from "@/types/chat";
-
-type ActiveView = "ask" | "discover";
 
 function generateId() {
   return crypto.randomUUID();
@@ -207,8 +206,10 @@ const Index = () => {
               onContextJumpBack={handleContextJumpBack}
               onContextReset={handleContextReset}
             />
-          ) : (
+          ) : activeView === "discover" ? (
             <AnomaliesView onRouteToAsk={handleRouteToAsk} />
+          ) : (
+            <CatalogueView />
           )}
         </div>
       </main>
