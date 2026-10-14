@@ -9,8 +9,8 @@ describe("CatalogueView Component", () => {
     expect(screen.getByText(/Metadata Catalogue & Data Dictionary/i)).toBeInTheDocument();
     expect(screen.getByText(/NMDS 2.0/i)).toBeInTheDocument();
     expect(screen.getByText(/Audited Datasets/i)).toBeInTheDocument();
-    expect(screen.getByText(/Indexed Tables/i)).toBeInTheDocument();
-    expect(screen.getByText(/Standardized Variables/i)).toBeInTheDocument();
+    expect(screen.getByText(/Total Audited Records/i)).toBeInTheDocument();
+    expect(screen.getByText(/Scope Architecture/i)).toBeInTheDocument();
   });
 
   it("renders all 6 dataset filter pill buttons dynamically from data", () => {

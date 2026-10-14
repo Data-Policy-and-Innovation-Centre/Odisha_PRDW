@@ -154,7 +154,7 @@ export function CatalogueView() {
               </Badge>
             </div>
             <p className="text-xs text-muted-design mt-1">
-              Authoritative reference catalogue for Odisha rural governance datasets, spanning structured DuckDB outlays and multimodal Gram Sabha media.
+              Authoritative reference catalogue for Odisha rural governance datasets. Audited across 20 pilot Gram Panchayats (multimodal Gram Sabha media, MoMs, and local registers) and all 6,794 GPs statewide (financial planning, vouchers, and core database).
             </p>
           </div>
 
@@ -193,21 +193,21 @@ export function CatalogueView() {
 
           <div className="bg-ivory/70 border border-line rounded-lg p-2.5 flex items-center gap-3">
             <div className="w-8 h-8 rounded-md bg-teal-deep/10 text-teal-deep flex items-center justify-center flex-shrink-0">
-              <TableIcon size={16} />
+              <Database size={16} />
             </div>
             <div>
-              <div className="text-xs text-muted-design font-medium">Indexed Tables</div>
-              <div className="text-sm font-semibold text-ink">{catalogData.totalTables} Schemas</div>
+              <div className="text-xs text-muted-design font-medium">Total Audited Records</div>
+              <div className="text-sm font-semibold text-ink">{catalogData.totalRecords}</div>
             </div>
           </div>
 
           <div className="bg-ivory/70 border border-line rounded-lg p-2.5 flex items-center gap-3">
             <div className="w-8 h-8 rounded-md bg-teal-deep/10 text-teal-deep flex items-center justify-center flex-shrink-0">
-              <FileText size={16} />
+              <TableIcon size={16} />
             </div>
             <div>
-              <div className="text-xs text-muted-design font-medium">Standardized Variables</div>
-              <div className="text-sm font-semibold text-ink">{catalogData.totalVariables} Fields</div>
+              <div className="text-xs text-muted-design font-medium">Indexed Tables &amp; Vars</div>
+              <div className="text-sm font-semibold text-ink">{catalogData.totalTables} Tables • {catalogData.totalVariables} Vars</div>
             </div>
           </div>
 
@@ -216,8 +216,8 @@ export function CatalogueView() {
               <Camera size={16} />
             </div>
             <div>
-              <div className="text-xs text-muted-design font-medium">Unstructured Evidence</div>
-              <div className="text-sm font-semibold text-ink">Photos, MoMs, Video</div>
+              <div className="text-xs text-muted-design font-medium">Scope Architecture</div>
+              <div className="text-sm font-semibold text-ink">20 Pilot GPs + Statewide</div>
             </div>
           </div>
         </div>
@@ -406,6 +406,16 @@ export function CatalogueView() {
                       <CardDescription className="text-xs text-ink/80 mt-1 leading-relaxed">
                         {activeDataset.description}
                       </CardDescription>
+
+                      {/* Display dataset key metric cards */}
+                      <div className="grid grid-cols-3 gap-2.5 mt-3 pt-2 border-t border-line/40">
+                        {activeDataset.cards.map((c, i) => (
+                          <div key={i} className="bg-ivory/60 border border-line/80 rounded p-2 text-center">
+                            <div className="text-sm font-bold text-teal-deep font-mono">{c.metric}</div>
+                            <div className="text-[11px] text-muted-design mt-0.5">{c.title}</div>
+                          </div>
+                        ))}
+                      </div>
                     </CardHeader>
 
                     <CardContent className="pt-0 border-t border-line/60 mt-2">

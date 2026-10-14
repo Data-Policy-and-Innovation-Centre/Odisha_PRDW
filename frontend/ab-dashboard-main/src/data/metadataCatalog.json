@@ -2,7 +2,10 @@
   "totalDatasets": 6,
   "totalTables": 148,
   "totalVariables": 1909,
-  "totalRecords": "21,500,000+",
+  "totalRecords": "133,338,761",
+  "totalRecordsExact": 133338761,
+  "pilotScope": "20 Pilot Gram Panchayats (Multimodal Meeting Media, MoMs, and local registers)",
+  "statewideScope": "All 6,794 Odisha Gram Panchayats (Financial plans, vouchers, and core database)",
   "standards": "National Metadata Standards (NMDS 2.0)",
   "version": "2.1.0",
   "updatedAt": "2026-10-14",
@@ -13,11 +16,11 @@
       "name": "Master Analytical Database",
       "shortName": "Core DB",
       "category": "Structured Analytics",
-      "description": "Unified analytical dataset stored in DuckDB format, engineered for rapid cross-sectional querying and policy analytics. It joins financial allocations from eGramSwaraj, village profiles from Meri Panchayat, and meeting resolutions from Panchayat Nirnay into a high-performance star schema.",
+      "description": "The ultimate relational structured tables combining cleaned, flattened data across eGram Swaraj, Sabha Saar, Meri Panchayat, and Panchayat Nirnay into high-performance columnar star schemas. Contains statewide financial allocations, voucher payments, and project milestone indicators.",
       "administrativeSource": "DPIC Data Engineering Team & Government of Odisha PR&DW Department.",
       "purpose": "Provides primary analytical tables for decision support, budget execution tracking, scheme monitoring, and AI modeling across all 6,794 Gram Panchayats in Odisha.",
       "unitOfObservation": "Gram Panchayat-level aggregated metrics, financial line items, and physical progress records.",
-      "geographicCoverage": "All 30 Districts and 314 Blocks across Odisha.",
+      "geographicCoverage": "All 30 Districts and 314 Blocks across Odisha (Statewide Coverage).",
       "temporalCoverage": "FY 2020-21 through FY 2025-26.",
       "identifiers": [
         "gp_lgd_code",
@@ -28,24 +31,24 @@
       ],
       "architecture": "High-performance columnar DuckDB file with star-schema relational views.",
       "tags": [
+        "Consolidated",
+        "Relational",
         "DuckDB",
         "Star Schema",
-        "Analytics",
-        "Core Database",
-        "PR&DW"
+        "Statewide Analytics"
       ],
       "cards": [
         {
           "title": "Total Records",
-          "metric": "500,000+"
+          "metric": "112,219,944"
         },
         {
-          "title": "Structure",
-          "metric": "Star Schema"
+          "title": "Type",
+          "metric": "Unified Data"
         },
         {
           "title": "Format",
-          "metric": "DuckDB Columnar"
+          "metric": "SQL/CSV"
         }
       ],
       "totalTables": 34,
@@ -4888,12 +4891,12 @@
       "name": "eGram Swaraj (eGS)",
       "shortName": "eGS",
       "category": "Financial & Planning",
-      "description": "Comprehensive administrative and financial governance dataset combining planning outlays, approved Gram Panchayat Development Plans (GPDP), voucher expenditure, and multimodal project tracking across rural local bodies in India. It pairs transactional records with geotagged asset photography and administrative sanction orders.",
+      "description": "A comprehensive administrative and governance dataset combining financial planning, budgeting, expenditure, and project approvals with extensive unstructured media and documentation across Gram Panchayats in India. It pairs deeply nested transactional records with rich empirical evidence, including geotagged asset photography, administrative sanction orders, engineering technical approvals, and Gram Sabha meeting deliberations.",
       "administrativeSource": "Ministry of Panchayati Raj (MoPR), Government of India.",
       "purpose": "Primary financial management and planning backbone enabling transparent fund transfers, accounting audits, and public accountability under the 15th Finance Commission and state grants.",
       "unitOfObservation": "Granular financial transactions, project vouchers, and individual planned activities.",
-      "geographicCoverage": "Pan-India coverage with deep localized data for Odisha Panchayats.",
-      "temporalCoverage": "FY 2020-21 through FY 2025-26.",
+      "geographicCoverage": "Pan-India coverage with deep localized data for Odisha Panchayats (Statewide Scraped).",
+      "temporalCoverage": "FY 2020-21 through FY 2025-26 (2020-2025).",
       "identifiers": [
         "gp_lgd_code",
         "activityCd",
@@ -4905,8 +4908,8 @@
       "tags": [
         "Financial Planning",
         "mActionSoft Photos",
-        "Vouchers",
-        "GPDP",
+        "Meeting Notes & MoMs",
+        "Geospatial Telemetry",
         "Local Governance"
       ],
       "cards": [
@@ -4920,7 +4923,7 @@
         },
         {
           "title": "Media Layers",
-          "metric": "Photos, Docs, GIS"
+          "metric": "Photos, Docs, Geospatial"
         }
       ],
       "totalTables": 79,
@@ -16207,12 +16210,12 @@
       "name": "Panchayat Nirnay",
       "shortName": "Nirnay",
       "category": "Multimodal Governance",
-      "description": "The official digital governance repository of multimodal Gram Sabha proceedings, capturing photographic evidence, meeting notes, attendance records, official resolutions, and video recordings. This dataset provides the empirical verification layer ensuring local developmental works originate from legitimate, quorate citizen assemblies.",
-      "administrativeSource": "Ministry of Panchayati Raj (MoPR) in collaboration with NIC.",
-      "purpose": "Provides definitive audit evidence for democratic participation and legal compliance. Enables computer vision and multimodal LLM analysis to verify quorum attendance, transcribe handwritten Odia/Hindi meeting notes, extract citizen demands, and cross-reference resolutions with planned expenditures.",
+      "description": "The official digital governance repository of multimodal Gram Sabha proceedings, capturing photographic evidence, meeting notes, attendance records, official resolutions, and video recordings. Audited across the 20 pilot Gram Panchayats (1,319 media files). This dataset provides the empirical verification layer ensuring that local developmental works originate from legitimate, quorate citizen assemblies.",
+      "administrativeSource": "Ministry of Panchayati Raj (MoPR) in collaboration with NIC, supporting nationwide Gram Sabha documentation.",
+      "purpose": "Provides definitive audit evidence for democratic participation and legal compliance. Enables computer vision and multimodal LLM analysis to verify quorum attendance, transcribe handwritten Odia/Hindi meeting notes, extract citizen demands, and cross-reference resolutions with planned expenditures in eGram Swaraj.",
       "unitOfObservation": "Individual Gram Sabha meeting session, with granular multimodal attachments classified by content type: Attendance Sheets, Meeting Decisions & Notes, Meeting Agendas, Session Photographs, and Video Recordings.",
-      "geographicCoverage": "Panchayats across Odisha and Pan-India, indexed by District, Block, and Gram Panchayat LGD codes.",
-      "temporalCoverage": "2024 to 2026.",
+      "geographicCoverage": "20 Pilot Gram Panchayats across Odisha districts (Bargarh, Sambalpur, Koraput, Rayagada, Malkangiri, etc.).",
+      "temporalCoverage": "Meetings registered and conducted between 2024 and 2026.",
       "identifiers": [
         "gp_lgd_code",
         "meeting_id",
@@ -16228,8 +16231,8 @@
       ],
       "cards": [
         {
-          "title": "Audited Artifacts",
-          "metric": "1,319 Files"
+          "title": "Total Records",
+          "metric": "584"
         },
         {
           "title": "Data Type",
@@ -16370,36 +16373,36 @@
       "name": "Sabha Saar (MoMs)",
       "shortName": "Sabha Saar",
       "category": "Minutes & Transcripts",
-      "description": "Digitized natural language transcripts and Minutes of Meetings (MoM) of Gram Sabhas. Captures spoken deliberations, committee recommendations, and qualitative public feedback.",
-      "administrativeSource": "Panchayati Raj & Drinking Water Department.",
+      "description": "Digitized qualitative dataset of Gram Sabha Minutes of Meetings (MoM) and meeting metadata. Features digitized HTML transcripts, Odia-to-English translations, and structured resolutions across the 20 pilot Gram Panchayats. Useful for policy tracking, sentiment analysis, and verifying that public works match citizen aspirations.",
+      "administrativeSource": "Panchayati Raj & Drinking Water Department, Odisha.",
       "purpose": "Enables qualitative natural language processing (NLP), topic extraction, sentiment analysis, and civic priority mapping.",
       "unitOfObservation": "Granular meeting session agenda items, attendee discussions, and resolutions.",
-      "geographicCoverage": "Odisha Gram Panchayats with multilingual transcripts.",
+      "geographicCoverage": "20 Pilot Gram Panchayats in Odisha.",
       "temporalCoverage": "2024 through 2026.",
       "identifiers": [
         "gp_lgd_code",
         "meeting_id",
         "meeting_date"
       ],
-      "architecture": "Structured JSON metadata paired with digitized HTML transcripts.",
+      "architecture": "Structured JSON metadata paired with 304 digitized HTML transcripts.",
       "tags": [
-        "MoMs",
-        "HTML Transcripts",
-        "NLP",
-        "Qualitative Deliberations"
+        "Meeting Transcripts",
+        "NLP Actionability",
+        "MoM Summaries",
+        "Odia Translations"
       ],
       "cards": [
         {
-          "title": "Digitized MoMs",
-          "metric": "304 HTML Files"
+          "title": "Total Records",
+          "metric": "497"
         },
         {
-          "title": "Format",
-          "metric": "HTML / JSON"
+          "title": "Data Type",
+          "metric": "HTML / JSON Transcripts"
         },
         {
-          "title": "Language",
-          "metric": "Odia & English"
+          "title": "Evaluation",
+          "metric": "3-Tier Actionability"
         }
       ],
       "totalTables": 23,
@@ -17009,11 +17012,11 @@
       "name": "ePanchayat Sabha",
       "shortName": "eSabha",
       "category": "Procedural Formats & PDFs",
-      "description": "Official procedural documentation repository containing standardized 24-agenda formats (monthly, quarterly, half-yearly) and multi-tier Gram Sabha minutes in PDF/DOCX format.",
+      "description": "Comprehensive repository of standardized Gram Panchayat meeting documentation, including 24 formal agenda templates (Monthly, Quarterly, and Half-Yearly) and translated sample Minutes of Meetings in PDF format. A cornerstone for procedural compliance auditing across Panchayati Raj bodies.",
       "administrativeSource": "Odisha Panchayati Raj & Drinking Water Department.",
       "purpose": "Mandatory administrative guideline and compliance monitoring tool enforcing standardized 24-agenda procedural checklists across all Gram Sabhas.",
       "unitOfObservation": "Official meeting circulars, procedural guidelines, and scanned minutes.",
-      "geographicCoverage": "Odisha Statewide framework.",
+      "geographicCoverage": "Odisha Statewide framework & 20 pilot GP translated minutes.",
       "temporalCoverage": "2023 through 2026.",
       "identifiers": [
         "agenda_id",
@@ -17022,23 +17025,23 @@
       ],
       "architecture": "Unstructured scanned PDFs, standardized agenda templates, and Word document schemas.",
       "tags": [
-        "PDF Documents",
-        "24-Agenda Formats",
-        "Compliance",
-        "Official Formats"
+        "Meeting Agendas",
+        "MoM PDFs",
+        "Procedural Compliance",
+        "Odisha PR&DW"
       ],
       "cards": [
         {
-          "title": "Agenda Templates",
-          "metric": "24 Standardized"
+          "title": "Total Records",
+          "metric": "48"
         },
         {
           "title": "Format",
-          "metric": "PDF & DOCX"
+          "metric": "PDF / Scanned"
         },
         {
-          "title": "Evaluation",
-          "metric": "3-Tier Actionability"
+          "title": "Agendas Covered",
+          "metric": "24 Standard Formats"
         }
       ],
       "totalTables": 2,
@@ -17081,11 +17084,11 @@
       "name": "Meri Panchayat",
       "shortName": "Meri Panchayat",
       "category": "Citizen Feedback & App Logs",
-      "description": "Citizen-centric mobile platform capturing public grievances, service requests, developmental feedback, and representative contact catalogs across rural India.",
-      "administrativeSource": "Ministry of Panchayati Raj (MoPR).",
+      "description": "Data extracted directly from citizen engagement mobile platforms. It captures real-time complaints, service requests, and feedback submitted by rural citizens regarding local sanitation, water supply, road maintenance, and basic services.",
+      "administrativeSource": "Ministry of Panchayati Raj (MoPR), Government of India.",
       "purpose": "Tracks citizen satisfaction, complaint resolution turnaround times, and participatory democracy indicators at the grassroots.",
       "unitOfObservation": "Citizen feedback tickets, ratings, and grievance submissions.",
-      "geographicCoverage": "Odisha and Pan-India Gram Panchayats.",
+      "geographicCoverage": "Odisha Panchayats and Pan-India local bodies.",
       "temporalCoverage": "2024 to 2026.",
       "identifiers": [
         "gp_lgd_code",
@@ -17094,23 +17097,22 @@
       ],
       "architecture": "Nested JSON payloads extracted from mobile application APIs.",
       "tags": [
-        "Citizen Feedback",
-        "Grievances",
-        "Mobile App",
-        "Civic Services"
+        "Citizen Apps",
+        "Feedback",
+        "Real-time"
       ],
       "cards": [
         {
           "title": "Total Records",
-          "metric": "45,000+"
+          "metric": "18,989"
+        },
+        {
+          "title": "Data Type",
+          "metric": "Citizen Engagement"
         },
         {
           "title": "Source",
-          "metric": "Mobile App API"
-        },
-        {
-          "title": "Format",
-          "metric": "JSON"
+          "metric": "Mobile App"
         }
       ],
       "totalTables": 8,
