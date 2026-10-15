@@ -8,11 +8,25 @@ export interface VariableSchema {
   description: string;
 }
 
+export interface EvidenceArtifact {
+  title: string;
+  type: "IMAGE" | "PDF" | "HTML" | "VIDEO";
+  gpName: string;
+  district: string;
+  date: string;
+  fileSize: string;
+  description: string;
+  previewUrl?: string;
+  contentSnippet?: string;
+}
+
 export interface TableSchema {
   name: string;
   description: string;
   totalRecords?: number;
   variables: VariableSchema[];
+  sampleRows?: Record<string, string | number>[];
+  evidenceArtifacts?: EvidenceArtifact[];
 }
 
 export interface DatasetMetricCard {
@@ -45,6 +59,9 @@ export interface MetadataCatalogPayload {
   totalTables: number;
   totalVariables: number;
   totalRecords: string;
+  totalRecordsExact?: number;
+  pilotScope?: string;
+  statewideScope?: string;
   standards: string;
   version: string;
   updatedAt: string;

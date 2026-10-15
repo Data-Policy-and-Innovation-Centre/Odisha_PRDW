@@ -265,6 +265,28 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
+          ],
+          "sampleRows": [
+            {
+              "activity_code": "ACT/2024/9182",
+              "main_asset_category": 1.0,
+              "main_asset_subcategory": 12.0,
+              "main_asset_unit_type": 1.0,
+              "main_asset_unit_count": 1.0,
+              "asset_type": 101.0,
+              "asset_category": 12.0,
+              "asset_subcategory": 3.0
+            },
+            {
+              "activity_code": "ACT/2024/9450",
+              "main_asset_category": 2.0,
+              "main_asset_subcategory": 15.0,
+              "main_asset_unit_type": 2.0,
+              "main_asset_unit_count": 8.0,
+              "asset_type": 204.0,
+              "asset_category": 15.0,
+              "asset_subcategory": 5.0
+            }
           ]
         },
         {
@@ -1000,6 +1022,44 @@
               "missing": 0,
               "description": "Represents the Voucher Cost"
             }
+          ],
+          "sampleRows": [
+            {
+              "expenditure_id": 8419201,
+              "voucher_pk": 9102451,
+              "gp_lgd_code": 119598,
+              "fiscal_year": "2024-2025",
+              "voucher_no": "VO/2024/00481",
+              "voucher_line_no": 1,
+              "voucher_amount": 345200.0,
+              "voucher_date": "2024-11-14",
+              "payment_status": "Successful",
+              "scheme_name": "15th Finance Commission Tied Grant"
+            },
+            {
+              "expenditure_id": 8419202,
+              "voucher_pk": 9102452,
+              "gp_lgd_code": 116438,
+              "fiscal_year": "2024-2025",
+              "voucher_no": "VO/2024/00892",
+              "voucher_line_no": 1,
+              "voucher_amount": 185000.0,
+              "voucher_date": "2024-12-02",
+              "payment_status": "Successful",
+              "scheme_name": "Central Finance Commission Untied"
+            },
+            {
+              "expenditure_id": 8419203,
+              "voucher_pk": 9102453,
+              "gp_lgd_code": 117835,
+              "fiscal_year": "2024-2025",
+              "voucher_no": "VO/2024/01103",
+              "voucher_line_no": 1,
+              "voucher_amount": 260500.0,
+              "voucher_date": "2025-01-18",
+              "payment_status": "Successful",
+              "scheme_name": "State Finance Commission"
+            }
           ]
         },
         {
@@ -1212,6 +1272,24 @@
               "pctAvailable": "100.00%",
               "missing": 0,
               "description": "Represents the Core Asset Unit Count"
+            }
+          ],
+          "sampleRows": [
+            {
+              "activity_code": "ACT/2024/9182",
+              "plan_code": 104821,
+              "gp_lgd_code": 119598,
+              "fiscal_year": "2024-2025",
+              "source_file": "gpdp_plan_2024_khordha.csv",
+              "activity_type": "Public Works & Sanitation"
+            },
+            {
+              "activity_code": "ACT/2024/9450",
+              "plan_code": 104822,
+              "gp_lgd_code": 116438,
+              "fiscal_year": "2024-2025",
+              "source_file": "gpdp_plan_2024_bargarh.csv",
+              "activity_type": "Village Lighting Infrastructure"
             }
           ]
         },
@@ -16295,6 +16373,61 @@
               "missing": 0,
               "description": "Digital audiovisual recording capturing real-time Gram Sabha proceedings, oral discussions, and civic deliberations"
             }
+          ],
+          "sampleRows": [
+            {
+              "Attendance_Register_Photo": "media/2024/nirnay/andhrua_reg_01.jpg",
+              "Meeting_Notes_Decision_Photo": "media/2024/nirnay/andhrua_notes_01.jpg",
+              "Meeting_Agenda_Notice_Photo": "media/2024/nirnay/andhrua_notice_01.jpg",
+              "Meeting_Proceedings_Photo": "media/2024/nirnay/andhrua_proc_01.jpg",
+              "Gram_Sabha_Video_Recording": "media/2024/nirnay/andhrua_sabha_01.mp4"
+            },
+            {
+              "Attendance_Register_Photo": "media/2024/nirnay/bheden_reg_02.jpg",
+              "Meeting_Notes_Decision_Photo": "media/2024/nirnay/bheden_notes_02.jpg",
+              "Meeting_Agenda_Notice_Photo": "media/2024/nirnay/bheden_notice_02.jpg",
+              "Meeting_Proceedings_Photo": "media/2024/nirnay/bheden_proc_02.jpg",
+              "Gram_Sabha_Video_Recording": "media/2024/nirnay/bheden_sabha_02.mp4"
+            },
+            {
+              "Attendance_Register_Photo": "media/2024/nirnay/chikilli_reg_03.jpg",
+              "Meeting_Notes_Decision_Photo": "media/2024/nirnay/chikilli_notes_03.jpg",
+              "Meeting_Agenda_Notice_Photo": "media/2024/nirnay/chikilli_notice_03.jpg",
+              "Meeting_Proceedings_Photo": "media/2024/nirnay/chikilli_proc_03.jpg",
+              "Gram_Sabha_Video_Recording": "media/2024/nirnay/chikilli_sabha_03.mp4"
+            }
+          ],
+          "evidenceArtifacts": [
+            {
+              "title": "Gram Sabha Attendance Register Photo",
+              "type": "IMAGE",
+              "gpName": "Andhrua Gram Panchayat",
+              "district": "Khordha",
+              "date": "02 Oct 2024 (Gandhi Jayanti)",
+              "fileSize": "2.84 MB (JPEG, 4032x3024)",
+              "description": "High-resolution photographic capture of physical Gram Sabha attendance register showing physical presence, attendee signatures, and thumbprints.",
+              "contentSnippet": "Resolution No: 4/2024 • Verified Quorum: 84 attending villagers (42 female, 42 male) • Gram Panchayat seal and Sarpanch signature verified."
+            },
+            {
+              "title": "Handwritten Meeting Decisions & Notes Scan",
+              "type": "IMAGE",
+              "gpName": "Bheden Gram Panchayat",
+              "district": "Bargarh",
+              "date": "26 Nov 2024 (Constitution Day)",
+              "fileSize": "3.12 MB (JPEG, 3840x2160)",
+              "description": "Photographic record of official handwritten Gram Sabha meeting notes, deliberations, and developmental scheme resolutions recorded by PEO.",
+              "contentSnippet": "Agenda 2: Approval of Annual GPDP for FY 2025-26. 18 community projects prioritized across 12 wards totaling ₹48.5 Lakhs."
+            },
+            {
+              "title": "Official Gram Sabha Video Proceeding Log",
+              "type": "VIDEO",
+              "gpName": "Chikilli Gram Panchayat",
+              "district": "Ganjam",
+              "date": "15 Aug 2024 (Independence Day)",
+              "fileSize": "48.6 MB (MP4, 1080p H.264)",
+              "description": "Audiovisual recording of open Gram Sabha citizen dialogue on drinking water tube-well renovations and village road concrete paving.",
+              "contentSnippet": "Runtime: 18m 42s • Verified audio recording of Sarpanch, Ward Members, and public resolution voting in Odia language."
+            }
           ]
         },
         {
@@ -16636,6 +16769,39 @@
               "pctAvailable": "100.00%",
               "missing": 0,
               "description": "Digitized, structured HTML transcript of Gram Sabha Minutes of Meetings (MoM), capturing discussions, agendas, and resolutions"
+            }
+          ],
+          "sampleRows": [
+            {
+              "Digitized_Meeting_Minutes_HTML": "html_archive/2024/sabha_saar/andhrua_119598_mom.html"
+            },
+            {
+              "Digitized_Meeting_Minutes_HTML": "html_archive/2024/sabha_saar/bheden_116438_mom.html"
+            },
+            {
+              "Digitized_Meeting_Minutes_HTML": "html_archive/2024/sabha_saar/chikilli_117835_mom.html"
+            }
+          ],
+          "evidenceArtifacts": [
+            {
+              "title": "Digitized Minutes of Meeting (Odia / English)",
+              "type": "HTML",
+              "gpName": "Andhrua GP (LGD: 119598)",
+              "district": "Khordha",
+              "date": "02 Oct 2024",
+              "fileSize": "14.2 KB (Structured HTML)",
+              "description": "Digitized, clean HTML transcript transcribed from raw meeting notes, classifying agenda topics, attendee consensus, and passed resolutions.",
+              "contentSnippet": "<h3>ଗ୍ରାମ ସଭା ବିବରଣୀ (Gram Sabha Minutes)</h3><p><strong>ମୁଖ୍ୟ ବିଷୟ:</strong> ପାନୀୟ ଜଳ ଯୋଗାଣ ପ୍ରକଳ୍ପ ଅନୁମୋଦନ। ୧୫ତମ ଅର୍ଥ କମିଶନ ଅନୁଦାନରୁ ₹୩,୪୫,୨୦୦ ବ୍ୟୟ ଅଟକଳ ସର୍ବସମ୍ମତିକ୍ରମେ ଗୃହୀତ।</p>"
+            },
+            {
+              "title": "Action Items & Urgency Evaluation Matrix",
+              "type": "HTML",
+              "gpName": "Bheden GP (LGD: 116438)",
+              "district": "Bargarh",
+              "date": "26 Nov 2024",
+              "fileSize": "11.8 KB (Structured HTML)",
+              "description": "Classified decision matrix categorizing all discussed proposals into 3-tier actionability (High Priority, Medium Priority, Low Priority).",
+              "contentSnippet": "<div class='tier-1'><strong>Tier-1 Action Item:</strong> Solar Street Light Installation at Ward 3 & 7 (Allocated Budget: ₹1,85,000). Executing Officer: Junior Engineer.</div>"
             }
           ]
         },

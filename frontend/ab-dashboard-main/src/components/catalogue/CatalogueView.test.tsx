@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { CatalogueView } from "./CatalogueView";
 import Index from "@/pages/Index";
@@ -58,6 +58,60 @@ describe("CatalogueView Component", () => {
 
     // Restores standard browse mode
     expect(screen.queryByText(/matching variables for/i)).not.toBeInTheDocument();
+  });
+
+  it("toggles to Sample Data Preview mode and renders sample data rows", () => {
+    render(<CatalogueView />);
+
+    // Click Sample Data Preview mode
+    const sampleModeBtn = screen.getByTestId("viewmode-sample");
+    fireEvent.click(sampleModeBtn);
+
+    // Verify sample data banner and table appear
+    expect(screen.getByText(/Audited representative sample rows/i)).toBeInTheDocument();
+    expect(screen.getByText(/3 Representative Rows/i)).toBeInTheDocument();
+  });
+
+  it("renders export utilities (CSV export and Copy SQL buttons)", () => {
+    render(<CatalogueView />);
+    expect(screen.getByTestId("btn-copy-sql")).toBeInTheDocument();
+    expect(screen.getByTestId("btn-export-csv")).toBeInTheDocument();
+  });
+
+  it("renders in-table category filter buttons and filters columns", () => {
+    render(<CatalogueView />);
+    
+    const financialBtn = screen.getByTestId("filter-cat-financial");
+    expect(financialBtn).toBeInTheDocument();
+    fireEvent.click(financialBtn);
+
+    const allBtn = screen.getByTestId("filter-cat-all");
+    expect(allBtn).toBeInTheDocument();
+    fireEvent.click(allBtn);
+  });
+
+  it("opens and closes Evidence Artifacts modal on Nirnay tables", () => {
+    render(<CatalogueView />);
+
+    // Switch to Nirnay
+    fireEvent.click(screen.getByTestId("filter-panchayat-nirnay"));
+
+    // Switch to Evidence Artifacts mode
+    const evidenceBtn = screen.getByTestId("viewmode-evidence");
+    expect(evidenceBtn).toBeInTheDocument();
+    fireEvent.click(evidenceBtn);
+
+    // Inspect first evidence card
+    const card0 = screen.getByTestId("evidence-card-0");
+    fireEvent.click(card0);
+
+    // Verify modal is open
+    expect(screen.getByTestId("evidence-modal-content")).toBeInTheDocument();
+    expect(screen.getByText(/Government of Odisha • Panchayati Raj & Drinking Water/i)).toBeInTheDocument();
+
+    // Close modal
+    fireEvent.click(screen.getByTestId("btn-close-modal"));
+    expect(screen.queryByTestId("evidence-modal-content")).not.toBeInTheDocument();
   });
 });
 
