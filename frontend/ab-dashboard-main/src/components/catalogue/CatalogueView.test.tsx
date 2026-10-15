@@ -9,7 +9,7 @@ describe("CatalogueView Component", () => {
     expect(screen.getByText(/Metadata Catalogue & Data Dictionary/i)).toBeInTheDocument();
     expect(screen.getByText(/NMDS 2.0/i)).toBeInTheDocument();
     expect(screen.getByText(/Audited Datasets/i)).toBeInTheDocument();
-    expect(screen.getByText(/Total Audited Records/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/^Total Records$/i).length).toBeGreaterThanOrEqual(1);
     expect(screen.getByText(/Scope Architecture/i)).toBeInTheDocument();
   });
 

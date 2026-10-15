@@ -484,7 +484,7 @@ export function CatalogueView() {
               <Database size={14} />
             </div>
             <div>
-              <div className="text-[11px] text-muted-design font-medium leading-none">Total Audited Records</div>
+              <div className="text-[11px] text-muted-design font-medium leading-none">Total Records</div>
               <div className="text-xs font-semibold text-ink mt-0.5">{catalogData.totalRecords}</div>
             </div>
           </div>
