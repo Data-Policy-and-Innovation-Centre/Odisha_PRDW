@@ -115,6 +115,18 @@ export function CatalogueView() {
     return filteredSidebarTables[0] || availableTables[0];
   }, [availableTables, filteredSidebarTables, selectedTableName]);
 
+  // Dataset to display in the header banner:
+  // When a specific dataset tab is active, use that dataset.
+  // When "All Datasets" tab is active, dynamically use the parent dataset of the currently selected table
+  // so the domain context, foreign keys, and metrics are properly displayed like in the Core DB tab.
+  const displayedDataset: DatasetCatalog | undefined = useMemo(() => {
+    if (activeDataset) return activeDataset;
+    if (currentTableItem) {
+      return datasets.find((d) => d.id === currentTableItem.datasetId);
+    }
+    return datasets[0];
+  }, [activeDataset, currentTableItem, datasets]);
+
   // Filtered variables based on global search query
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return null;
@@ -707,31 +719,36 @@ export function CatalogueView() {
             {/* Main Detail Area */}
             <div className="flex-1 min-h-0 overflow-y-auto p-5 space-y-4">
               <div className="max-w-6xl mx-auto space-y-4">
-                {/* Dataset Meta Banner (if specific dataset selected) */}
-                {activeDataset && (
+                {/* Dataset Meta Banner (if specific dataset selected or dynamically inferred in All Datasets tab) */}
+                {displayedDataset && (
                   <Card className="border-line bg-white shadow-xs">
                     <CardHeader className="p-4 pb-2">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
                           <CardTitle className="text-base font-semibold text-ink">
-                            {activeDataset.name}
+                            {displayedDataset.name}
                           </CardTitle>
                           <Badge variant="outline" className="text-xs bg-teal-deep/5 text-teal-deep border-teal-deep/20 font-medium">
-                            {activeDataset.category}
+                            {displayedDataset.category}
                           </Badge>
+                          {selectedDatasetId === "all" && (
+                            <Badge variant="outline" className="text-[10px] bg-teal-deep/5 text-teal-deep border-teal-deep/20">
+                              Selected Table Domain
+                            </Badge>
+                          )}
                         </div>
                         <div className="flex items-center gap-1 text-xs text-muted-design">
                           <Building2 size={13} className="text-teal-deep" />
-                          <span>{activeDataset.administrativeSource}</span>
+                          <span>{displayedDataset.administrativeSource}</span>
                         </div>
                       </div>
                       <CardDescription className="text-xs text-ink/80 mt-1 leading-relaxed">
-                        {activeDataset.description}
+                        {displayedDataset.description}
                       </CardDescription>
 
                       {/* Display dataset key metric cards */}
                       <div className="grid grid-cols-3 gap-2 mt-2.5 pt-2 border-t border-line/40">
-                        {activeDataset.cards.map((c, i) => (
+                        {displayedDataset.cards.map((c, i) => (
                           <div key={i} className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
                             <div className="text-sm font-bold text-teal-deep font-mono leading-tight">{c.metric}</div>
                             <div className="text-[10px] text-muted-design mt-0.5">{c.title}</div>
@@ -746,7 +763,7 @@ export function CatalogueView() {
                           <Info size={14} className="text-teal-deep mt-0.5 flex-shrink-0" />
                           <div>
                             <span className="font-medium text-ink">Purpose: </span>
-                            <span className="text-muted-design">{activeDataset.purpose}</span>
+                            <span className="text-muted-design">{displayedDataset.purpose}</span>
                           </div>
                         </div>
 
@@ -755,7 +772,7 @@ export function CatalogueView() {
                           <div>
                             <span className="font-medium text-ink">Foreign Keys: </span>
                             <div className="flex flex-wrap gap-1 mt-1">
-                              {activeDataset.identifiers.map((id) => (
+                              {displayedDataset.identifiers.map((id) => (
                                 <span key={id} className="font-mono text-[10px] bg-ivory px-1.5 py-0.5 rounded border border-line text-ink">
                                   {id}
                                 </span>
@@ -768,7 +785,7 @@ export function CatalogueView() {
                           <MapPin size={14} className="text-teal-deep mt-0.5 flex-shrink-0" />
                           <div>
                             <span className="font-medium text-ink">Coverage: </span>
-                            <span className="text-muted-design">{activeDataset.geographicCoverage} • Timeframe: {activeDataset.temporalCoverage}</span>
+                            <span className="text-muted-design">{displayedDataset.geographicCoverage} • Timeframe: {displayedDataset.temporalCoverage}</span>
                           </div>
                         </div>
                       </div>
@@ -932,7 +949,7 @@ export function CatalogueView() {
                         </div>
 
                         {/* Variables Table */}
-                        <div className="overflow-x-auto max-h-[500px] overflow-y-auto">
+                        <div className="overflow-x-auto max-h-[580px] overflow-y-auto">
                           <Table>
                             <TableHeader className="sticky top-0 bg-ivory/95 backdrop-blur z-10 border-b border-line shadow-xs">
                               <TableRow>
