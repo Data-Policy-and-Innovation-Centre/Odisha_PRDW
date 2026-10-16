@@ -11,6 +11,7 @@ from datetime import date
 def _last_year_range() -> tuple[str, str]:
     y = date.today().year - 1
     return f"{y}-01-01", f"{y}-12-31"
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -136,16 +137,6 @@ GEO_ENTITY_TYPES_WIDEST_FIRST = tuple(etype for _, etype in GEO_TIERS_WIDEST_FIR
 _context_store = ContextStore()
 _catalog_column_metadata = build_catalog_column_metadata(DASHBOARD_CATALOG, TEMPLATE_CATALOG)
 
-app = FastAPI(title="Odisha PR&DW Panchayat Analytics API")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # ── Singletons ────────────────────────────────────────────────────────────────
 _validator:           EntityValidator | None       = None
 _openai_client:       OpenAI | None                = None
@@ -160,7 +151,6 @@ _default_end_date:    str
 _default_start_date, _default_end_date = _last_year_range()
 
 
-@app.on_event("startup")
 def startup():
     global _validator, _openai_client, _retriever
     global _dashboard_results, _dashboard_questions, _template_map
@@ -228,6 +218,23 @@ def startup():
           f"{len(_dashboard_results)} cached results, "
           f"{len(_template_map)} templates, "
           f"mode={'vector' if _retriever else 'intent'}")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    startup()
+    yield
+
+
+app = FastAPI(title="Odisha PR&DW Panchayat Analytics API", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # ── Models ────────────────────────────────────────────────────────────────────

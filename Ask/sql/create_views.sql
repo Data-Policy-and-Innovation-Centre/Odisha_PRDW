@@ -275,9 +275,9 @@ JOIN gram_panchayat g ON g.gp_lgd_code = v.gp_lgd_code;
 CREATE OR REPLACE VIEW v_rwi AS
 SELECT
     r.gp_lgd_code,
-    g.gp_name,
-    g.zp_name AS district_name,
-    g.block_name,
+    COALESCE(g.gp_name, r.gp_name) AS gp_name,
+    COALESCE(g.zp_name, r.district_name) AS district_name,
+    COALESCE(g.block_name, r.block_name) AS block_name,
     r.rwi_score
 FROM dim_rwi r
-JOIN gram_panchayat g ON r.gp_lgd_code = g.gp_lgd_code;
+LEFT JOIN gram_panchayat g ON r.gp_lgd_code = g.gp_lgd_code;

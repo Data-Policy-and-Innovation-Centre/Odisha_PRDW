@@ -2318,7 +2318,7 @@
    "district_name": "Bargarh",
    "top_n": 10
   },
-  "rows": 4,
+  "rows": 10,
   "status": "PASS"
  },
  "RWI-003": {
@@ -2328,7 +2328,7 @@
    "district_name": "Bargarh",
    "top_n": 10
   },
-  "rows": 4,
+  "rows": 10,
   "status": "PASS"
  },
  "RWI-004": {
