@@ -115,17 +115,6 @@ export function CatalogueView() {
     return filteredSidebarTables[0] || availableTables[0];
   }, [availableTables, filteredSidebarTables, selectedTableName]);
 
-  // Dataset to display in the header banner:
-  // When a specific dataset tab is active, use that dataset.
-  // When "All Datasets" tab is active, dynamically use the parent dataset of the currently selected table
-  // so the domain context, foreign keys, and metrics are properly displayed like in the Core DB tab.
-  const displayedDataset: DatasetCatalog | undefined = useMemo(() => {
-    if (activeDataset) return activeDataset;
-    if (currentTableItem) {
-      return datasets.find((d) => d.id === currentTableItem.datasetId);
-    }
-    return datasets[0];
-  }, [activeDataset, currentTableItem, datasets]);
 
   // Filtered variables based on global search query
   const searchResults = useMemo(() => {
@@ -719,41 +708,45 @@ export function CatalogueView() {
             {/* Main Detail Area */}
             <div className="flex-1 min-h-0 overflow-y-auto p-5 space-y-4">
               <div className="max-w-6xl mx-auto space-y-4">
-                {/* Dataset Meta Banner (if specific dataset selected or dynamically inferred in All Datasets tab) */}
-                {displayedDataset && (
+                {/* Header Banner: Distinct Consolidated Repository for "All Datasets", or Specific Domain for Filtered Tabs */}
+                {selectedDatasetId === "all" ? (
                   <Card className="border-line bg-white shadow-xs">
                     <CardHeader className="p-4 pb-2">
                       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
                           <CardTitle className="text-base font-semibold text-ink">
-                            {displayedDataset.name}
+                            All Datasets — Consolidated Governance Repository
                           </CardTitle>
                           <Badge variant="outline" className="text-xs bg-teal-deep/5 text-teal-deep border-teal-deep/20 font-medium">
-                            {displayedDataset.category}
+                            Cross-Domain Catalogue
                           </Badge>
-                          {selectedDatasetId === "all" && (
-                            <Badge variant="outline" className="text-[10px] bg-teal-deep/5 text-teal-deep border-teal-deep/20">
-                              Selected Table Domain
-                            </Badge>
-                          )}
+                          <Badge variant="outline" className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200 font-medium">
+                            Statewide Conformance
+                          </Badge>
                         </div>
                         <div className="flex items-center gap-1 text-xs text-muted-design">
                           <Building2 size={13} className="text-teal-deep" />
-                          <span>{displayedDataset.administrativeSource}</span>
+                          <span>Panchayati Raj &amp; Drinking Water Department, Odisha</span>
                         </div>
                       </div>
                       <CardDescription className="text-xs text-ink/80 mt-1 leading-relaxed">
-                        {displayedDataset.description}
+                        Consolidated repository integrating all 6 rural governance data domains across Odisha: Master Analytical DB, eGram Swaraj, Panchayat Nirnay, Sabha Saar, ePanchayat Sabha, and Meri Panchayat. Spans statewide financial ledgers, spatial registries, village asset inventories, and multimodal citizen meeting evidence.
                       </CardDescription>
 
-                      {/* Display dataset key metric cards */}
+                      {/* Global Overview 3 Metric Cards */}
                       <div className="grid grid-cols-3 gap-2 mt-2.5 pt-2 border-t border-line/40">
-                        {displayedDataset.cards.map((c, i) => (
-                          <div key={i} className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
-                            <div className="text-sm font-bold text-teal-deep font-mono leading-tight">{c.metric}</div>
-                            <div className="text-[10px] text-muted-design mt-0.5">{c.title}</div>
-                          </div>
-                        ))}
+                        <div className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
+                          <div className="text-sm font-bold text-teal-deep font-mono leading-tight">{catalogData.totalRecords}</div>
+                          <div className="text-[10px] text-muted-design mt-0.5">Audited Statewide Records</div>
+                        </div>
+                        <div className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
+                          <div className="text-sm font-bold text-teal-deep font-mono leading-tight">{catalogData.totalTables} Tables • {catalogData.totalVariables} Vars</div>
+                          <div className="text-[10px] text-muted-design mt-0.5">143 Unique Tables • 6 Datasets</div>
+                        </div>
+                        <div className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
+                          <div className="text-sm font-bold text-teal-deep font-mono leading-tight">6 Integrated Domains</div>
+                          <div className="text-[10px] text-muted-design mt-0.5">Financial, Spatial &amp; Multimodal</div>
+                        </div>
                       </div>
                     </CardHeader>
 
@@ -762,17 +755,19 @@ export function CatalogueView() {
                         <div className="flex items-start gap-2">
                           <Info size={14} className="text-teal-deep mt-0.5 flex-shrink-0" />
                           <div>
-                            <span className="font-medium text-ink">Purpose: </span>
-                            <span className="text-muted-design">{displayedDataset.purpose}</span>
+                            <span className="font-medium text-ink">Catalogue Scope: </span>
+                            <span className="text-muted-design">
+                              Provides a single unified taxonomy and data dictionary connecting citizen meeting discussions, Panchayat resolutions, financial outlays, and scheme outcomes.
+                            </span>
                           </div>
                         </div>
 
                         <div className="flex items-start gap-2">
                           <KeyRound size={14} className="text-teal-deep mt-0.5 flex-shrink-0" />
                           <div>
-                            <span className="font-medium text-ink">Foreign Keys: </span>
+                            <span className="font-medium text-ink">Cross-Domain Linkages: </span>
                             <div className="flex flex-wrap gap-1 mt-1">
-                              {displayedDataset.identifiers.map((id) => (
+                              {["gp_lgd_code", "block_lgd_code", "district_lgd_code", "meeting_id", "voucher_id", "activity_code"].map((id) => (
                                 <span key={id} className="font-mono text-[10px] bg-ivory px-1.5 py-0.5 rounded border border-line text-ink">
                                   {id}
                                 </span>
@@ -784,13 +779,83 @@ export function CatalogueView() {
                         <div className="flex items-start gap-2">
                           <MapPin size={14} className="text-teal-deep mt-0.5 flex-shrink-0" />
                           <div>
-                            <span className="font-medium text-ink">Coverage: </span>
-                            <span className="text-muted-design">{displayedDataset.geographicCoverage} • Timeframe: {displayedDataset.temporalCoverage}</span>
+                            <span className="font-medium text-ink">Statewide Architecture: </span>
+                            <span className="text-muted-design">
+                              All 30 Districts, 314 Blocks &amp; 6,794 GPs statewide + 20 Pilot GPs multimodal in-depth artifacts (FY 2020-21 to FY 2025-26).
+                            </span>
                           </div>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
+                ) : (
+                  activeDataset && (
+                    <Card className="border-line bg-white shadow-xs">
+                      <CardHeader className="p-4 pb-2">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                          <div className="flex items-center gap-2">
+                            <CardTitle className="text-base font-semibold text-ink">
+                              {activeDataset.name}
+                            </CardTitle>
+                            <Badge variant="outline" className="text-xs bg-teal-deep/5 text-teal-deep border-teal-deep/20 font-medium">
+                              {activeDataset.category}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center gap-1 text-xs text-muted-design">
+                            <Building2 size={13} className="text-teal-deep" />
+                            <span>{activeDataset.administrativeSource}</span>
+                          </div>
+                        </div>
+                        <CardDescription className="text-xs text-ink/80 mt-1 leading-relaxed">
+                          {activeDataset.description}
+                        </CardDescription>
+
+                        {/* Display dataset key metric cards */}
+                        <div className="grid grid-cols-3 gap-2 mt-2.5 pt-2 border-t border-line/40">
+                          {activeDataset.cards.map((c, i) => (
+                            <div key={i} className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
+                              <div className="text-sm font-bold text-teal-deep font-mono leading-tight">{c.metric}</div>
+                              <div className="text-[10px] text-muted-design mt-0.5">{c.title}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </CardHeader>
+
+                      <CardContent className="p-4 pt-0 border-t border-line/60 mt-1">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2 text-xs">
+                          <div className="flex items-start gap-2">
+                            <Info size={14} className="text-teal-deep mt-0.5 flex-shrink-0" />
+                            <div>
+                              <span className="font-medium text-ink">Purpose: </span>
+                              <span className="text-muted-design">{activeDataset.purpose}</span>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-2">
+                            <KeyRound size={14} className="text-teal-deep mt-0.5 flex-shrink-0" />
+                            <div>
+                              <span className="font-medium text-ink">Foreign Keys: </span>
+                              <div className="flex flex-wrap gap-1 mt-1">
+                                {activeDataset.identifiers.map((id) => (
+                                  <span key={id} className="font-mono text-[10px] bg-ivory px-1.5 py-0.5 rounded border border-line text-ink">
+                                    {id}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex items-start gap-2">
+                            <MapPin size={14} className="text-teal-deep mt-0.5 flex-shrink-0" />
+                            <div>
+                              <span className="font-medium text-ink">Coverage: </span>
+                              <span className="text-muted-design">{activeDataset.geographicCoverage} • Timeframe: {activeDataset.temporalCoverage}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )
                 )}
 
                 {/* Selected Table Detail Card with Interactive Features */}
