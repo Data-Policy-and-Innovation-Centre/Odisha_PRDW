@@ -11,6 +11,7 @@ from datetime import date
 def _last_year_range() -> tuple[str, str]:
     y = date.today().year - 1
     return f"{y}-01-01", f"{y}-12-31"
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -36,7 +37,7 @@ from query_router.router            import (
 )
 from query_router.vector_retriever  import VectorRetriever
 from query_router.dashboard_catalog import DASHBOARD_CATALOG
-from query_router.template_catalog  import TEMPLATE_CATALOG
+from query_router.template_catalog  import TEMPLATE_CATALOG, bind
 from query_router.config            import (MAX_SUGGESTION_CHIPS, USE_VECTOR_RETRIEVAL,
                                             LLM_TIMEOUT_SECONDS)
 from query_router.models            import (
@@ -136,16 +137,6 @@ GEO_ENTITY_TYPES_WIDEST_FIRST = tuple(etype for _, etype in GEO_TIERS_WIDEST_FIR
 _context_store = ContextStore()
 _catalog_column_metadata = build_catalog_column_metadata(DASHBOARD_CATALOG, TEMPLATE_CATALOG)
 
-app = FastAPI(title="Odisha PR&DW Panchayat Analytics API")
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # ── Singletons ────────────────────────────────────────────────────────────────
 _validator:           EntityValidator | None       = None
 _openai_client:       OpenAI | None                = None
@@ -160,7 +151,6 @@ _default_end_date:    str
 _default_start_date, _default_end_date = _last_year_range()
 
 
-@app.on_event("startup")
 def startup():
     global _validator, _openai_client, _retriever
     global _dashboard_results, _dashboard_questions, _template_map
@@ -175,37 +165,11 @@ def startup():
 
     print(f"[startup] Default date range: {_default_start_date} to {_default_end_date}")
 
-    oai_key = os.environ.get("OPENAI_API_KEY", "")
-    if not oai_key:
-        print("[startup] WARNING: OPENAI_API_KEY not set — /query endpoint disabled")
-        return
-
-    # A client-level timeout, because two call paths do not set one per request:
-    # the startup index build and the query-time embedding in VectorRetriever.
-    # The four chat sites pass timeout=LLM_TIMEOUT_SECONDS themselves and are
-    # unaffected by this default.
-    #
-    # Without it a stalled embedding blocks startup FOREVER. The index build
-    # below is wrapped in try/except so a failure degrades to intent
-    # classification and the app still serves -- but a hang is not an exception,
-    # so that fallback never runs, uvicorn never binds, and the health check
-    # never passes. Observed in ECS: tasks sat idle at 0.7 CPU units past the
-    # grace period and were killed, repeatedly, while a task started earlier
-    # kept serving. The service could not be replaced.
-    _openai_client = OpenAI(api_key=oai_key, timeout=LLM_TIMEOUT_SECONDS)
     _validator     = EntityValidator(adapter)
 
-    # The extraction prompt's enum lists are GENERATED from the registry, never
-    # hand-written — an incomplete enumeration is a value the extractor cannot
-    # emit, and that failure is silent (see entity_extractor's docstring). The
-    # registry only exists once the validator above has read the database, so
-    # this is the one place the prompt can be finalised.
+    # The extraction prompt's enum lists are GENERATED from the registry
     refresh_prompt_enums(_validator.registry_values)
 
-    # The place vocabulary, as words. Used to tell a follow-up FRAGMENT ("in
-    # Ganjam?") from a question that merely mentions a place. Indexed by ENTITY
-    # TYPE — `fragment_reroute.GEO_SLOTS` holds bind names, which the registry
-    # does not answer to.
     _geo_tokens.update(geo_vocabulary_tokens(
         *(_validator.registry_values(etype)
           for etype in GEO_ENTITY_TYPES_WIDEST_FIRST)
@@ -229,12 +193,17 @@ def startup():
         + list(_dashboard_questions.values())
     ))
 
+    oai_key = os.environ.get("OPENAI_API_KEY", "")
+    if not oai_key:
+        print("[startup] NOTICE: OPENAI_API_KEY not set. Deterministic RWI queries are active on localhost.")
+        print(f"[startup] Router ready — {len(_dashboard_results)} cached results, {len(_template_map)} templates (deterministic mode)")
+        return
+
+    _openai_client = OpenAI(api_key=oai_key, timeout=LLM_TIMEOUT_SECONDS)
+
     # Build the vector-retrieval index (embeds the catalog once; cached to .tmp)
     if USE_VECTOR_RETRIEVAL:
         try:
-            # The known-unanswerables are indexed alongside the templates on
-            # purpose: an officer's beneficiary question has to RETRIEVE before
-            # it can be refused with a reason instead of a generic miss.
             _retriever = VectorRetriever(
                 _openai_client, DASHBOARD_CATALOG, TEMPLATE_CATALOG,
                 UNANSWERABLE_CATALOG,
@@ -249,6 +218,23 @@ def startup():
           f"{len(_dashboard_results)} cached results, "
           f"{len(_template_map)} templates, "
           f"mode={'vector' if _retriever else 'intent'}")
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    startup()
+    yield
+
+
+app = FastAPI(title="Odisha PR&DW Panchayat Analytics API", lifespan=lifespan)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # ── Models ────────────────────────────────────────────────────────────────────
@@ -789,8 +775,105 @@ def debug_cache():
         "sample": [{"qid": r[0], "status": r[1], "rows": r[2]} for r in sample[:20]],
     }
 
+
+def _try_handle_rwi(message: str, session_id: str) -> Optional[QueryResponse]:
+    """Deterministically handle questions about Relative Wealth Index (RWI)."""
+    global _validator, _template_map
+    msg_low = message.lower()
+    if not ("rwi" in msg_low or "wealth" in msg_low):
+        return None
+    
+    if _validator is None:
+        startup()
+        
+    t0 = time.time()
+    gp_names = sorted(list(_validator.registry_values('gp')), key=len, reverse=True)
+    district_names = sorted(list(_validator.registry_values('district')), key=len, reverse=True)
+    block_names = sorted(list(_validator.registry_values('block')), key=len, reverse=True)
+
+    matched_gp = None
+    for gp in gp_names:
+        if re.search(r'\b' + re.escape(gp.lower()) + r'\b', msg_low):
+            matched_gp = gp
+            break
+            
+    matched_dist = None
+    for dist in district_names:
+        if re.search(r'\b' + re.escape(dist.lower()) + r'\b', msg_low):
+            matched_dist = dist
+            break
+            
+    matched_block = None
+    for block in block_names:
+        if re.search(r'\b' + re.escape(block.lower()) + r'\b', msg_low):
+            matched_block = block
+            break
+            
+    if matched_gp:
+        val = _validator.validate(matched_gp, 'gp')
+        sql, params = bind("RWI-001", {"gp_name": val.resolved_code})
+        qid = "RWI-001"
+    elif any(w in msg_low for w in ["lowest", "bottom", "poorest", "least"]):
+        sql, params = bind("RWI-003", {"district_name": matched_dist, "block_name": matched_block})
+        qid = "RWI-003"
+    elif any(w in msg_low for w in ["average", "mean", "summary", "overall"]):
+        sql, params = bind("RWI-004", {"district_name": matched_dist, "block_name": matched_block})
+        qid = "RWI-004"
+    else:
+        sql, params = bind("RWI-002", {"district_name": matched_dist, "block_name": matched_block})
+        qid = "RWI-002"
+        
+    adapter = get_adapter()
+    res = adapter.execute(sql, params)
+    rows = [dict(zip(res.description, r)) for r in res.fetchall()]
+    
+    t = _template_map.get(qid, TEMPLATE_CATALOG.get(qid, {}))
+    caveat = t.get("caveat")
+    
+    if qid == "RWI-001" and rows:
+        r0 = rows[0]
+        answer = f"The Relative Wealth Index (RWI) score of {r0['gp_name']} Gram Panchayat ({r0['block_name']} block, {r0['district_name']}) is {r0['rwi_score']}."
+    elif qid in ("RWI-002", "RWI-003"):
+        direction = "highest" if qid == "RWI-002" else "lowest"
+        geo = matched_block or matched_dist or "all available Gram Panchayats"
+        answer = f"Gram Panchayats with the {direction} Relative Wealth Index in {geo}:"
+    elif qid == "RWI-004" and rows:
+        r0 = rows[0]
+        geo_label = r0.get("geography", r0.get("region", "selected region"))
+        answer = f"Relative Wealth Index summary for {geo_label}: Average score is {r0['avg_rwi_score']} (Min: {r0['min_rwi_score']}, Max: {r0['max_rwi_score']}) across {r0['total_gps']} Gram Panchayats."
+    else:
+        answer = "Relative Wealth Index query result:"
+
+    latency = round((time.time() - t0) * 1000, 2)
+    return QueryResponse(
+        session_id=session_id,
+        context_frame=None,
+        tier="tier2",
+        answer=answer + f"\n\nNote: {caveat}" if caveat else answer,
+        result=rows,
+        query_id=qid,
+        query_description=t.get("abstract_question"),
+        intent="rwi_query",
+        entities=[],
+        caveat=caveat,
+        date_range={},
+        date_filter_applied=False,
+        latency_ms=latency,
+        suggestions=[
+            Chip(label="Highest RWI in Khordha", send_text="Which Gram Panchayats have the highest Relative Wealth Index in Khordha?"),
+            Chip(label="Lowest RWI in Bargarh", send_text="Which Gram Panchayats have the lowest Relative Wealth Index in Bargarh?"),
+            Chip(label="Average RWI in Bargarh", send_text="What is the average Relative Wealth Index across Gram Panchayats in Bargarh?"),
+        ]
+    )
+
+
 @app.post("/query", response_model=QueryResponse)
 def query_endpoint(req: QueryRequest):
+    session_id = req.session_id or str(uuid4())
+    rwi_res = _try_handle_rwi(req.message, session_id)
+    if rwi_res is not None:
+        return rwi_res
+
     if _openai_client is None:
         raise HTTPException(
             status_code=503,

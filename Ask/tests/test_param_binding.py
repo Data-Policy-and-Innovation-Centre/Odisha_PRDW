@@ -138,7 +138,7 @@ class BindParamValuesTests(unittest.TestCase):
         self.assertEqual(
             sum(1 for t in TEMPLATE_CATALOG.values()
                 for s in t["param_slots"] if s["name"] == "top_n"),
-            91,
+            93,
         )
 
     def test_the_declared_default_and_the_runtime_table_agree(self):

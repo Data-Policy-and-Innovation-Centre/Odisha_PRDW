@@ -79,7 +79,7 @@ def _seed_cache_tables(adapter) -> None:
 # blocks (1:1 rollups) that v_activity joins; the other five are what the
 # catalogue names directly.
 VIEWS = ("v_exp", "v_approval", "v_activity", "v_plan",
-         "v_asset", "v_progress", "v_voucher")
+         "v_asset", "v_progress", "v_voucher", "v_rwi")
 
 VIEWS_DDL_PATH = Path(__file__).parent / "sql" / "create_views.sql"
 

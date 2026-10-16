@@ -719,7 +719,29 @@ class EntityValidator:
         `db_factory` adapter grows 9 districts to 30 and 20 GPs to ~6,800 with
         no code change (decision D4).
         """
-        for etype, sql in self._DB_SOURCES.items():
+        has_v_rwi = False
+        try:
+            cache_conn.execute("SELECT 1 FROM v_rwi LIMIT 0")
+            has_v_rwi = True
+        except Exception:
+            pass
+
+        sources = dict(self._DB_SOURCES)
+        if has_v_rwi:
+            sources["district"] = (
+                "SELECT DISTINCT zp_name FROM gram_panchayat WHERE zp_name IS NOT NULL "
+                "UNION SELECT DISTINCT district_name FROM v_rwi WHERE district_name IS NOT NULL"
+            )
+            sources["block"] = (
+                "SELECT DISTINCT block_name FROM gram_panchayat WHERE block_name IS NOT NULL "
+                "UNION SELECT DISTINCT block_name FROM v_rwi WHERE block_name IS NOT NULL"
+            )
+            sources["gp"] = (
+                "SELECT DISTINCT gp_name FROM gram_panchayat WHERE gp_name IS NOT NULL "
+                "UNION SELECT DISTINCT gp_name FROM v_rwi WHERE gp_name IS NOT NULL"
+            )
+
+        for etype, sql in sources.items():
             rows = self._query(cache_conn, sql)
             values = [str(r[0]) for r in rows if r[0] is not None]
             if etype == "status":
@@ -785,11 +807,27 @@ class EntityValidator:
         """The GP roster as PANCHAYATS: one query feeds the code index that
         every template binds through and the block/district qualifiers a
         collision prompt needs."""
-        rows = self._query(
-            cache_conn,
-            "SELECT gp_lgd_code, gp_name, block_name, zp_name FROM gram_panchayat "
-            "WHERE gp_name IS NOT NULL",
-        )
+        has_v_rwi = False
+        try:
+            cache_conn.execute("SELECT 1 FROM v_rwi LIMIT 0")
+            has_v_rwi = True
+        except Exception:
+            pass
+
+        if has_v_rwi:
+            sql = (
+                "SELECT gp_lgd_code, gp_name, block_name, zp_name FROM gram_panchayat "
+                "WHERE gp_name IS NOT NULL "
+                "UNION "
+                "SELECT gp_lgd_code, gp_name, block_name, district_name AS zp_name FROM v_rwi "
+                "WHERE gp_name IS NOT NULL"
+            )
+        else:
+            sql = (
+                "SELECT gp_lgd_code, gp_name, block_name, zp_name FROM gram_panchayat "
+                "WHERE gp_name IS NOT NULL"
+            )
+        rows = self._query(cache_conn, sql)
         for code, name, block, district in rows:
             name = str(name).strip()
             code = str(code or "").strip()
