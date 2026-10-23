@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import catalogPayload from "@/data/metadataCatalog.json";
 import type {
   MetadataCatalogPayload,
@@ -33,6 +33,7 @@ import {
   X,
   FileCode,
   SlidersHorizontal,
+  AlertTriangle,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -50,7 +51,7 @@ const catalogData = catalogPayload as unknown as MetadataCatalogPayload;
 
 export function CatalogueView() {
   const [selectedDatasetId, setSelectedDatasetId] = useState<string>("all");
-  const [selectedTableName, setSelectedTableName] = useState<string>("");
+  const [selectedTableRef, setSelectedTableRef] = useState<{ datasetId?: string; tableName: string } | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sidebarFilter, setSidebarFilter] = useState<string>("");
 
@@ -106,14 +107,18 @@ export function CatalogueView() {
     );
   }, [availableTables, sidebarFilter]);
 
-  // Automatically select the first table if none selected or if selection is invalid
+  // Automatically select the first table if none selected or if selection is invalid (matching datasetId + tableName)
   const currentTableItem = useMemo(() => {
-    if (selectedTableName) {
-      const match = availableTables.find((item) => item.table.name === selectedTableName);
+    if (selectedTableRef) {
+      const match = availableTables.find(
+        (item) =>
+          item.table.name === selectedTableRef.tableName &&
+          (!selectedTableRef.datasetId || item.datasetId === selectedTableRef.datasetId)
+      );
       if (match) return match;
     }
     return filteredSidebarTables[0] || availableTables[0];
-  }, [availableTables, filteredSidebarTables, selectedTableName]);
+  }, [availableTables, filteredSidebarTables, selectedTableRef]);
 
 
   // Filtered variables based on global search query
@@ -218,6 +223,11 @@ export function CatalogueView() {
     return vars;
   }, [currentTableItem, inTableSearch, variableCategory]);
 
+  // Check if current table has verified sample rows
+  const hasRealSampleRows = useMemo(() => {
+    return Boolean(currentTableItem?.table.sampleRows && currentTableItem.table.sampleRows.length > 0);
+  }, [currentTableItem]);
+
   // Generates or retrieves sample rows for any table
   const sampleRowsData = useMemo(() => {
     if (!currentTableItem) return [];
@@ -225,7 +235,7 @@ export function CatalogueView() {
       return currentTableItem.table.sampleRows;
     }
 
-    // Dynamic fallback generation based on the table's actual schema
+    // Dynamic fallback generation based on the table's actual schema (explicitly labeled as synthetic)
     const gps = [
       { name: "Andhrua", code: 119598, dist: "Khordha", block: "Bhubaneswar" },
       { name: "Bheden", code: 116438, dist: "Bargarh", block: "Bheden" },
@@ -278,94 +288,34 @@ export function CatalogueView() {
         row2[key] = (idx * 2.0 + 3.0).toFixed(2);
         row3[key] = (idx * 1.2 + 1.8).toFixed(2);
       } else {
-        row1[key] = "Audited Record A";
-        row2[key] = "Audited Record B";
-        row3[key] = "Audited Record C";
+        row1[key] = "Sample_Val_A";
+        row2[key] = "Sample_Val_B";
+        row3[key] = "Sample_Val_C";
       }
     });
 
     return [row1, row2, row3];
   }, [currentTableItem]);
 
-  // Checks if the current table has unstructured evidence artifacts
+  // Checks if the current table actually owns unstructured evidence artifacts
   const hasEvidenceArtifacts = useMemo(() => {
-    if (!currentTableItem) return false;
-    if (currentTableItem.table.evidenceArtifacts && currentTableItem.table.evidenceArtifacts.length > 0) {
-      return true;
-    }
-    const dsId = currentTableItem.datasetId;
-    return dsId === "panchayat-nirnay" || dsId === "sabha-saar" || currentTableItem.table.name.includes("Unstructured");
+    return Boolean(
+      currentTableItem?.table.evidenceArtifacts &&
+      currentTableItem.table.evidenceArtifacts.length > 0
+    );
   }, [currentTableItem]);
 
-  // Retrieve evidence artifacts for the current table
+  // Retrieve evidence artifacts exclusively for the current table if present
   const currentEvidenceArtifacts: EvidenceArtifact[] = useMemo(() => {
-    if (!currentTableItem) return [];
-    if (currentTableItem.table.evidenceArtifacts && currentTableItem.table.evidenceArtifacts.length > 0) {
-      return currentTableItem.table.evidenceArtifacts;
-    }
-
-    if (currentTableItem.datasetId === "panchayat-nirnay") {
-      return [
-        {
-          title: "Gram Sabha Attendance Register Photo",
-          type: "IMAGE",
-          gpName: "Andhrua Gram Panchayat",
-          district: "Khordha",
-          date: "02 Oct 2024",
-          fileSize: "2.84 MB (JPEG)",
-          description: "High-resolution photographic capture of physical Gram Sabha attendance register showing physical presence, attendee signatures, and thumbprints.",
-          contentSnippet: "Verified Quorum: 84 attending villagers (42 female, 42 male). Gram Panchayat seal and Sarpanch signature verified.",
-        },
-        {
-          title: "Handwritten Meeting Decisions & Notes Scan",
-          type: "IMAGE",
-          gpName: "Bheden Gram Panchayat",
-          district: "Bargarh",
-          date: "26 Nov 2024",
-          fileSize: "3.12 MB (JPEG)",
-          description: "Photographic record of official handwritten Gram Sabha meeting notes, deliberations, and developmental scheme resolutions recorded by PEO.",
-          contentSnippet: "Agenda 2: Approval of Annual GPDP for FY 2025-26. 18 community projects prioritized across 12 wards totaling ₹48.5 Lakhs.",
-        },
-        {
-          title: "Gram Sabha Video Proceeding Log",
-          type: "VIDEO",
-          gpName: "Chikilli Gram Panchayat",
-          district: "Ganjam",
-          date: "15 Aug 2024",
-          fileSize: "48.6 MB (MP4, 1080p)",
-          description: "Audiovisual recording of open Gram Sabha citizen dialogue on drinking water tube-well renovations and village road concrete paving.",
-          contentSnippet: "Runtime: 18m 42s • Verified audio recording of Sarpanch, Ward Members, and public resolution voting in Odia language.",
-        },
-      ];
-    }
-
-    if (currentTableItem.datasetId === "sabha-saar") {
-      return [
-        {
-          title: "Digitized Minutes of Meeting (Odia / English)",
-          type: "HTML",
-          gpName: "Andhrua GP (LGD: 119598)",
-          district: "Khordha",
-          date: "02 Oct 2024",
-          fileSize: "14.2 KB (Structured HTML)",
-          description: "Digitized, clean HTML transcript transcribed from raw meeting notes, classifying agenda topics, attendee consensus, and passed resolutions.",
-          contentSnippet: "ମୁଖ୍ୟ ବିଷୟ: ପାନୀୟ ଜଳ ଯୋଗାଣ ପ୍ରକଳ୍ପ ଅନୁମୋଦନ। ୧୫ତମ ଅର୍ଥ କମିଶନ ଅନୁଦାନରୁ ₹୩,୪୫,୨୦୦ ବ୍ୟୟ ଅଟକଳ ସର୍ବସମ୍ମତିକ୍ରମେ ଗୃହୀତ।",
-        },
-        {
-          title: "Action Items & Urgency Evaluation Matrix",
-          type: "HTML",
-          gpName: "Bheden GP (LGD: 116438)",
-          district: "Bargarh",
-          date: "26 Nov 2024",
-          fileSize: "11.8 KB (Structured HTML)",
-          description: "Classified decision matrix categorizing all discussed proposals into 3-tier actionability (High Priority, Medium Priority, Low Priority).",
-          contentSnippet: "Tier-1 Action Item: Solar Street Light Installation at Ward 3 & 7 (Allocated Budget: ₹1,85,000). Executing Officer: Junior Engineer.",
-        },
-      ];
-    }
-
-    return [];
+    return currentTableItem?.table.evidenceArtifacts || [];
   }, [currentTableItem]);
+
+  // If active table has no evidence artifacts, automatically fallback viewMode to schema
+  useEffect(() => {
+    if (viewMode === "evidence" && !hasEvidenceArtifacts) {
+      setViewMode("schema");
+    }
+  }, [hasEvidenceArtifacts, viewMode]);
 
   // Export current table schema as CSV
   const handleExportCSV = () => {
@@ -389,12 +339,25 @@ export function CatalogueView() {
     document.body.removeChild(link);
   };
 
-  // Copy SQL query snippet
+  // Helper to safely quote SQL identifiers following DuckDB / ANSI SQL rules
+  const quoteSqlIdentifier = (name: string): string => {
+    const sqlKeywords = new Set([
+      "SELECT", "FROM", "WHERE", "GROUP", "ORDER", "BY", "LIMIT", "JOIN",
+      "ON", "AS", "YEAR", "DATE", "TABLE", "USER", "CASE", "WHEN", "THEN", "ELSE", "END"
+    ]);
+    if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(name) || sqlKeywords.has(name.toUpperCase())) {
+      return `"${name.replace(/"/g, '""')}"`;
+    }
+    return name;
+  };
+
+  // Copy SQL query snippet with properly escaped table and column identifiers
   const handleCopySQL = () => {
     if (!currentTableItem) return;
     const t = currentTableItem.table;
-    const cols = t.variables.slice(0, 6).map((v) => v.name).join(", ");
-    const sql = `-- Query ${t.name} from Odisha PR&DW Analytical Database\nSELECT ${cols}\nFROM ${t.name}\nLIMIT 100;`;
+    const cols = t.variables.slice(0, 6).map((v) => quoteSqlIdentifier(v.name)).join(", ");
+    const quotedTable = quoteSqlIdentifier(t.name);
+    const sql = `-- Query ${t.name} from Odisha PR&DW Analytical Database\nSELECT ${cols}\nFROM ${quotedTable}\nLIMIT 100;`;
     navigator.clipboard.writeText(sql);
     setCopiedSql(true);
     setTimeout(() => setCopiedSql(false), 2000);
@@ -517,7 +480,7 @@ export function CatalogueView() {
             data-testid="filter-all"
             onClick={() => {
               setSelectedDatasetId("all");
-              setSelectedTableName("");
+              setSelectedTableRef(null);
               setSidebarFilter("");
               setViewMode("schema");
             }}
@@ -536,7 +499,7 @@ export function CatalogueView() {
               data-testid={`filter-${d.id}`}
               onClick={() => {
                 setSelectedDatasetId(d.id);
-                setSelectedTableName("");
+                setSelectedTableRef(null);
                 setSidebarFilter("");
                 setViewMode("schema");
               }}
@@ -613,7 +576,7 @@ export function CatalogueView() {
                             <button
                               onClick={() => {
                                 setSelectedDatasetId(res.datasetId);
-                                setSelectedTableName(res.tableName);
+                                setSelectedTableRef({ datasetId: res.datasetId, tableName: res.tableName });
                                 setSearchQuery("");
                                 setViewMode("schema");
                               }}
@@ -672,14 +635,16 @@ export function CatalogueView() {
                     No tables matching "{sidebarFilter}"
                   </div>
                 ) : (
-                  filteredSidebarTables.map(({ datasetName, table }) => {
-                    const isSelected = currentTableItem?.table.name === table.name;
+                  filteredSidebarTables.map(({ datasetId, datasetName, table }) => {
+                    const isSelected =
+                      currentTableItem?.table.name === table.name &&
+                      currentTableItem?.datasetId === datasetId;
                     return (
                       <button
-                        key={`${datasetName}-${table.name}`}
+                        key={`${datasetId}-${table.name}`}
                         data-testid={`table-btn-${table.name}`}
                         onClick={() => {
-                          setSelectedTableName(table.name);
+                          setSelectedTableRef({ datasetId, tableName: table.name });
                           setViewMode("schema");
                         }}
                         className={`w-full text-left p-2.5 rounded-md transition-all text-xs flex flex-col gap-1 border ${
@@ -937,7 +902,7 @@ export function CatalogueView() {
                             }`}
                           >
                             <TableIcon size={13} />
-                            <span>Sample Data Preview ({sampleRowsData.length} Rows)</span>
+                            <span>Sample Data Preview ({hasRealSampleRows ? `${sampleRowsData.length} Rows` : "Synthetic Preview"})</span>
                           </button>
 
                           {hasEvidenceArtifacts && (
@@ -1056,7 +1021,7 @@ export function CatalogueView() {
                                               {variable.pctAvailable}
                                             </span>
                                             <span className="text-[10px] text-muted-design">
-                                              {pctVal >= 99 ? "Complete" : "Audited"}
+                                              {pctVal >= 99 ? "Complete" : "Partial"}
                                             </span>
                                           </div>
                                           <div className="w-full bg-line/60 h-1.5 rounded-full overflow-hidden">
@@ -1085,15 +1050,37 @@ export function CatalogueView() {
                     {/* Mode 2: Sample Data Preview View */}
                     {viewMode === "sample" && (
                       <CardContent className="p-4 space-y-3">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1.5 text-xs text-muted-design">
-                            <Sparkles size={14} className="text-teal-deep" />
-                            <span>Audited representative sample rows reflecting actual Odisha Gram Panchayat indicators.</span>
+                        {hasRealSampleRows ? (
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-1.5 text-xs text-muted-design">
+                              <Sparkles size={14} className="text-teal-deep" />
+                              <span>Representative sample rows extracted from {currentTableItem.table.name} data records.</span>
+                            </div>
+                            <Badge variant="outline" className="text-[10px] bg-teal-deep/5 text-teal-deep border-teal-deep/20 font-medium">
+                              {sampleRowsData.length} Representative Rows
+                            </Badge>
                           </div>
-                          <Badge variant="outline" className="text-[10px] bg-teal-deep/5 text-teal-deep border-teal-deep/20">
-                            3 Representative Rows
-                          </Badge>
-                        </div>
+                        ) : (
+                          <div className="space-y-2">
+                            <div className="p-3 bg-amber-50/90 border border-amber-200 rounded-md text-xs flex items-start gap-2.5 text-amber-900">
+                              <AlertTriangle size={16} className="text-amber-600 mt-0.5 flex-shrink-0" />
+                              <div className="space-y-0.5">
+                                <div className="font-semibold text-amber-950">Synthetic Schema Preview</div>
+                                <div className="text-amber-800 leading-relaxed">
+                                  No raw sample rows are supplied in the catalogue payload for this table. The preview below displays synthetic values synthesized from column data types to illustrate schema structure and formatting. They are not audited or real data records.
+                                </div>
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-between pt-1">
+                              <div className="text-[11px] text-muted-design italic">
+                                Synthetic fallback rows based on schema types:
+                              </div>
+                              <Badge variant="outline" className="text-[10px] bg-amber-50 text-amber-800 border-amber-300 font-medium">
+                                Synthetic Preview ({sampleRowsData.length} Rows)
+                              </Badge>
+                            </div>
+                          </div>
+                        )}
 
                         <div className="border border-line rounded-lg overflow-x-auto bg-white shadow-xs">
                           <Table>
@@ -1129,7 +1116,7 @@ export function CatalogueView() {
                           <div>
                             <span className="text-xs font-semibold text-ink">Multimodal Governance Artifacts</span>
                             <p className="text-[11px] text-muted-design">
-                              Audited physical evidence files recorded across the 20 pilot Gram Panchayats. Click any card to inspect artifact details.
+                              Representative pilot evidence specimens demonstrating data extraction and multimodal validation schemas for 20 pilot Gram Panchayats. Click any card to inspect artifact details.
                             </p>
                           </div>
                           <Badge variant="outline" className="text-[10px] bg-teal-deep/5 text-teal-deep border-teal-deep/20 font-medium">
@@ -1245,7 +1232,7 @@ export function CatalogueView() {
                       <span className="text-[11px] font-bold text-ink uppercase tracking-wide">
                         Government of Odisha • Panchayati Raj &amp; Drinking Water
                       </span>
-                      <span className="text-[10px] text-teal-deep font-mono">Official Audit Scan</span>
+                      <span className="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 font-mono">Representative Specimen</span>
                     </div>
                     <div className="text-xs font-semibold text-ink">{inspectedArtifact.gpName}</div>
                     <div className="text-[11px] text-muted-design font-mono leading-relaxed bg-ivory/80 p-2.5 rounded border border-line/60">
@@ -1253,7 +1240,7 @@ export function CatalogueView() {
                     </div>
                     <div className="text-[10px] text-muted-design flex items-center justify-between pt-1">
                       <span>Recorded Date: {inspectedArtifact.date}</span>
-                      <span className="text-emerald-700 font-medium">✓ Quorum Signatures Validated</span>
+                      <span className="text-muted-design font-medium">Demonstration schema extraction format</span>
                     </div>
                   </div>
                 ) : inspectedArtifact.type === "HTML" ? (

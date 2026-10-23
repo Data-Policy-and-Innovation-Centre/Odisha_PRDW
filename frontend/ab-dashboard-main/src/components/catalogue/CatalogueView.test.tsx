@@ -60,16 +60,88 @@ describe("CatalogueView Component", () => {
     expect(screen.queryByText(/matching variables for/i)).not.toBeInTheDocument();
   });
 
-  it("toggles to Sample Data Preview mode and renders sample data rows", () => {
+  it("toggles to Sample Data Preview mode and renders sample data rows for verified tables", () => {
     render(<CatalogueView />);
 
-    // Click Sample Data Preview mode
+    // Click Sample Data Preview mode on default table (activity_asset has verified sample rows)
     const sampleModeBtn = screen.getByTestId("viewmode-sample");
     fireEvent.click(sampleModeBtn);
 
-    // Verify sample data banner and table appear
-    expect(screen.getByText(/Audited representative sample rows/i)).toBeInTheDocument();
-    expect(screen.getByText(/3 Representative Rows/i)).toBeInTheDocument();
+    // Verify verified sample data banner and table appear
+    expect(screen.getByText(/Representative sample rows extracted from activity_asset/i)).toBeInTheDocument();
+    expect(screen.getByText(/2 Representative Rows/i)).toBeInTheDocument();
+  });
+
+  it("displays synthetic preview alert and badge for tables without verified sample rows", () => {
+    render(<CatalogueView />);
+
+    // Click a table without sample rows (e.g., activity_community_service)
+    const tableBtn = screen.getByTestId("table-btn-activity_community_service");
+    fireEvent.click(tableBtn);
+
+    // Click Sample Data Preview
+    const sampleModeBtn = screen.getByTestId("viewmode-sample");
+    fireEvent.click(sampleModeBtn);
+
+    // Verify synthetic banner and warning appear
+    expect(screen.getByText(/Synthetic Schema Preview/i)).toBeInTheDocument();
+    expect(screen.getByText(/No raw sample rows are supplied in the catalogue payload for this table/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/Synthetic Preview/i).length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("restricts Evidence Artifacts view mode button strictly to tables with artifacts", () => {
+    render(<CatalogueView />);
+
+    // Switch to Panchayat Nirnay
+    fireEvent.click(screen.getByTestId("filter-panchayat-nirnay"));
+
+    // Table 1 (Unstructured_Meeting_Media) has evidenceArtifacts
+    expect(screen.getByTestId("viewmode-evidence")).toBeInTheDocument();
+
+    // Table 2 (Extraction_Audit_Report_20260625_050459) does NOT have evidenceArtifacts
+    fireEvent.click(screen.getByTestId("table-btn-Extraction_Audit_Report_20260625_050459"));
+    expect(screen.queryByTestId("viewmode-evidence")).not.toBeInTheDocument();
+  });
+
+  it("disambiguates table selection by dataset ID for duplicate table names across datasets", () => {
+    render(<CatalogueView />);
+
+    // In All Datasets view, PDF_Files appears across multiple datasets
+    const pdfButtons = screen.getAllByTestId("table-btn-PDF_Files");
+    expect(pdfButtons.length).toBeGreaterThan(1);
+
+    // Click the ePanchayat Sabha PDF_Files instance
+    const eSabhaPdfBtn = pdfButtons.find((btn) => btn.textContent?.includes("ePanchayat Sabha"));
+    expect(eSabhaPdfBtn).toBeDefined();
+    if (eSabhaPdfBtn) {
+      fireEvent.click(eSabhaPdfBtn);
+      // Verify detail card displays ePanchayat Sabha as dataset
+      expect(screen.getByText(/Dataset:/i)).toBeInTheDocument();
+      expect(screen.getByText("ePanchayat Sabha")).toBeInTheDocument();
+    }
+  });
+
+  it("quotes SQL identifiers with hyphens and reserved characters when copying SQL", () => {
+    const writeTextMock = vi.fn().mockResolvedValue(undefined);
+    Object.assign(navigator, {
+      clipboard: {
+        writeText: writeTextMock,
+      },
+    });
+
+    render(<CatalogueView />);
+
+    // Switch to eGram Swaraj which contains table "2020-2021"
+    fireEvent.click(screen.getByTestId("filter-egram-swaraj"));
+    fireEvent.click(screen.getByTestId("table-btn-2020-2021"));
+
+    // Copy SQL
+    const copySqlBtn = screen.getByTestId("btn-copy-sql");
+    fireEvent.click(copySqlBtn);
+
+    expect(writeTextMock).toHaveBeenCalled();
+    const copiedQuery = writeTextMock.mock.calls[0][0];
+    expect(copiedQuery).toContain('FROM "2020-2021"');
   });
 
   it("renders export utilities (CSV export and Copy SQL buttons)", () => {
