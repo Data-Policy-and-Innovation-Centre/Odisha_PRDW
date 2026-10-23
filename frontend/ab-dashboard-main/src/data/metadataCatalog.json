@@ -268,26 +268,27 @@
           ],
           "sampleRows": [
             {
-              "activity_code": "ACT/2024/9182",
-              "main_asset_category": 1.0,
-              "main_asset_subcategory": 12.0,
-              "main_asset_unit_type": 1.0,
+              "activity_code": "50384996",
+              "main_asset_category": 77.0,
+              "main_asset_subcategory": 1076.0,
+              "main_asset_unit_type": 2.0,
               "main_asset_unit_count": 1.0,
-              "asset_type": 101.0,
-              "asset_category": 12.0,
-              "asset_subcategory": 3.0
+              "asset_type": 2.0,
+              "asset_category": 77.0,
+              "asset_subcategory": 1076.0
             },
             {
-              "activity_code": "ACT/2024/9450",
-              "main_asset_category": 2.0,
-              "main_asset_subcategory": 15.0,
+              "activity_code": "44434680",
+              "main_asset_category": 0.0,
+              "main_asset_subcategory": 1235.0,
               "main_asset_unit_type": 2.0,
-              "main_asset_unit_count": 8.0,
-              "asset_type": 204.0,
-              "asset_category": 15.0,
-              "asset_subcategory": 5.0
+              "main_asset_unit_count": 1.0,
+              "asset_type": 0.0,
+              "asset_category": 0.0,
+              "asset_subcategory": 0.0
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "activity_community_service",
@@ -356,7 +357,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "activity_delegation",
@@ -452,7 +454,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "activity_expenditure",
@@ -602,7 +605,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "activity_fund",
@@ -779,7 +783,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "activity_nsap",
@@ -857,7 +862,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "activity_training",
@@ -944,7 +950,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "activity_voucher",
@@ -1025,42 +1032,37 @@
           ],
           "sampleRows": [
             {
-              "expenditure_id": 8419201,
-              "voucher_pk": 9102451,
-              "gp_lgd_code": 119598,
-              "fiscal_year": "2024-2025",
-              "voucher_no": "VO/2024/00481",
+              "expenditure_id": "1",
+              "voucher_pk": "186",
+              "gp_lgd_code": "119598",
+              "fiscal_year": "2025-2026",
+              "voucher_no": "XVFC/2025-26/P/143",
               "voucher_line_no": 1,
-              "voucher_amount": 345200.0,
-              "voucher_date": "2024-11-14",
-              "payment_status": "Successful",
-              "scheme_name": "15th Finance Commission Tied Grant"
+              "voucher_date": "2025-10-31",
+              "voucher_cost": 150000.0
             },
             {
-              "expenditure_id": 8419202,
-              "voucher_pk": 9102452,
-              "gp_lgd_code": 116438,
-              "fiscal_year": "2024-2025",
-              "voucher_no": "VO/2024/00892",
+              "expenditure_id": "1",
+              "voucher_pk": "187",
+              "gp_lgd_code": "119598",
+              "fiscal_year": "2025-2026",
+              "voucher_no": "XVFC/2025-26/P/144",
               "voucher_line_no": 1,
-              "voucher_amount": 185000.0,
-              "voucher_date": "2024-12-02",
-              "payment_status": "Successful",
-              "scheme_name": "Central Finance Commission Untied"
+              "voucher_date": "2025-10-31",
+              "voucher_cost": 205.0
             },
             {
-              "expenditure_id": 8419203,
-              "voucher_pk": 9102453,
-              "gp_lgd_code": 117835,
-              "fiscal_year": "2024-2025",
-              "voucher_no": "VO/2024/01103",
+              "expenditure_id": "1",
+              "voucher_pk": "278",
+              "gp_lgd_code": "119598",
+              "fiscal_year": "2025-2026",
+              "voucher_no": "XVFC/2025-26/P/191",
               "voucher_line_no": 1,
-              "voucher_amount": 260500.0,
-              "voucher_date": "2025-01-18",
-              "payment_status": "Successful",
-              "scheme_name": "State Finance Commission"
+              "voucher_date": "2026-03-30",
+              "voucher_cost": 205294.0
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "planned_activity",
@@ -1276,22 +1278,29 @@
           ],
           "sampleRows": [
             {
-              "activity_code": "ACT/2024/9182",
-              "plan_code": 104821,
-              "gp_lgd_code": 119598,
-              "fiscal_year": "2024-2025",
-              "source_file": "gpdp_plan_2024_khordha.csv",
-              "activity_type": "Public Works & Sanitation"
+              "activity_code": "44434680",
+              "plan_code": "3145893",
+              "gp_lgd_code": "116350",
+              "fiscal_year": "2020-2021",
+              "source_file": "2020_PL.json",
+              "activity_type": 61,
+              "activity_name": "TIED - 5 DAY MOBILE VAN",
+              "total_cost": 20000.0,
+              "activity_status": 74
             },
             {
-              "activity_code": "ACT/2024/9450",
-              "plan_code": 104822,
-              "gp_lgd_code": 116438,
-              "fiscal_year": "2024-2025",
-              "source_file": "gpdp_plan_2024_bargarh.csv",
-              "activity_type": "Village Lighting Infrastructure"
+              "activity_code": "44434714",
+              "plan_code": "3145893",
+              "gp_lgd_code": "116350",
+              "fiscal_year": "2020-2021",
+              "source_file": "2020_PL.json",
+              "activity_type": 61,
+              "activity_name": "TIED - MAINTENANCE OF WATER SUPPLY ",
+              "total_cost": 100000.0,
+              "activity_status": 74
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "v_activity",
@@ -1864,7 +1873,8 @@
               "missing": 0,
               "description": "Represents the Days Since Sanction"
             }
-          ]
+          ],
+          "tableType": "view"
         },
         {
           "name": "v_activity_base",
@@ -2428,7 +2438,8 @@
               "missing": 0,
               "description": "Represents the Has Progress Evidence"
             }
-          ]
+          ],
+          "tableType": "view"
         },
         {
           "name": "AI_Chatbot_Questions_12-08-2026",
@@ -2569,7 +2580,8 @@
               "missing": 0,
               "description": "Represents the Rows Returned"
             }
-          ]
+          ],
+          "tableType": "auxiliary"
         },
         {
           "name": "AI_chat_bot_questions",
@@ -2629,7 +2641,8 @@
               "missing": 0,
               "description": "Represents the Dropped"
             }
-          ]
+          ],
+          "tableType": "auxiliary"
         },
         {
           "name": "DOCX_Files",
@@ -2644,7 +2657,8 @@
               "missing": 0,
               "description": "Word document (.docx/.doc) containing administrative data schemas, technical object mappings, or scraper documentation"
             }
-          ]
+          ],
+          "tableType": "auxiliary"
         },
         {
           "name": "PDF_Files",
@@ -2659,7 +2673,8 @@
               "missing": 0,
               "description": "Unstructured PDF documents containing Panchayat agendas and MoMs"
             }
-          ]
+          ],
+          "tableType": "auxiliary"
         },
         {
           "name": "admin_approval",
@@ -2791,7 +2806,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "admin_approval_scheme",
@@ -2905,7 +2921,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "answers_AI_Chatbot_Andhrua_2025-2026",
@@ -3010,7 +3027,8 @@
               "missing": 0,
               "description": "Represents the Sql"
             }
-          ]
+          ],
+          "tableType": "auxiliary"
         },
         {
           "name": "dim_code",
@@ -3061,7 +3079,8 @@
               "missing": 0,
               "description": "Represents the Confidence"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "dim_lsdg_theme",
@@ -3112,7 +3131,8 @@
               "missing": 0,
               "description": "Internal System Audit Rows"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "dim_welfare_scheme",
@@ -3136,7 +3156,8 @@
               "missing": 0,
               "description": "XV Finance Commission, 5TH STATE FINANCE COMMISSION, Fourteen Finance Commission, Own Funds, 4TH STATE FINANCE SCHEME"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "gp_profile",
@@ -3259,7 +3280,8 @@
               "missing": 0,
               "description": "Represents the Households"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "gram_panchayat",
@@ -3337,7 +3359,8 @@
               "missing": 0,
               "description": "Represents the Block Name"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "physical_progress",
@@ -3460,7 +3483,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "plan",
@@ -3538,7 +3562,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "quarantine",
@@ -3616,7 +3641,8 @@
               "missing": 0,
               "description": "Represents the Row Count"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "technical_approval",
@@ -3748,7 +3774,8 @@
               "missing": 0,
               "description": "Internal System Audit Run Id"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "v_approval",
@@ -3997,7 +4024,8 @@
               "missing": 0,
               "description": "Represents the Tied Untied"
             }
-          ]
+          ],
+          "tableType": "view"
         },
         {
           "name": "v_asset",
@@ -4291,7 +4319,8 @@
               "missing": 0,
               "description": "Defines the Specific Asset Type Label"
             }
-          ]
+          ],
+          "tableType": "view"
         },
         {
           "name": "v_exp",
@@ -4387,7 +4416,8 @@
               "missing": 0,
               "description": "Activity-wise approved cost and expenditure ID"
             }
-          ]
+          ],
+          "tableType": "view"
         },
         {
           "name": "v_plan",
@@ -4492,7 +4522,8 @@
               "missing": 0,
               "description": "Represents the Is Approved"
             }
-          ]
+          ],
+          "tableType": "view"
         },
         {
           "name": "v_progress",
@@ -4660,7 +4691,8 @@
               "missing": 0,
               "description": "Total Estimated Cost of the Activity"
             }
-          ]
+          ],
+          "tableType": "view"
         },
         {
           "name": "v_voucher",
@@ -4783,7 +4815,8 @@
               "missing": 0,
               "description": "Represents the District Name"
             }
-          ]
+          ],
+          "tableType": "view"
         },
         {
           "name": "voucher",
@@ -4960,7 +4993,8 @@
               "missing": 0,
               "description": "Voucher transaction amount"
             }
-          ]
+          ],
+          "tableType": "base"
         }
       ]
     },
@@ -5155,7 +5189,8 @@
               "missing": 0,
               "description": "Represents the Opening Balance"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2020_AA",
@@ -5224,7 +5259,8 @@
               "missing": 0,
               "description": "Authority issuing the administrative approval (e.g., Block Development Officer)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2020_PL",
@@ -5527,7 +5563,8 @@
               "missing": 0,
               "description": "Delegated Execution Metadata: Perent Planning Unit Cd"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2020_PP",
@@ -5605,7 +5642,8 @@
               "missing": 0,
               "description": "Represents the Physicalprogressassetstageuploadwebservice"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2020_RE",
@@ -5638,7 +5676,8 @@
               "missing": 0,
               "description": "Unique code for the planning unit (e.g., GP Code)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2020_TA",
@@ -5698,7 +5737,8 @@
               "missing": 0,
               "description": "Date of the Technical Approval Order."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2021-2022",
@@ -5848,7 +5888,8 @@
               "missing": 0,
               "description": "Represents the Opening Balance"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2021_AA",
@@ -5917,7 +5958,8 @@
               "missing": 0,
               "description": "Authority issuing the administrative approval (e.g., Block Development Officer)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2021_PL",
@@ -6220,7 +6262,8 @@
               "missing": 0,
               "description": "Delegated Execution Metadata: Perent Planning Unit Cd"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2021_PP",
@@ -6298,7 +6341,8 @@
               "missing": 0,
               "description": "Represents the Physicalprogressassetstageuploadwebservice"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2021_RE",
@@ -6331,7 +6375,8 @@
               "missing": 0,
               "description": "Unique code for the planning unit (e.g., GP Code)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2021_TA",
@@ -6391,7 +6436,8 @@
               "missing": 0,
               "description": "Date of the Technical Approval Order."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2022-2023",
@@ -6541,7 +6587,8 @@
               "missing": 0,
               "description": "Represents the Opening Balance"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2022_AA",
@@ -6610,7 +6657,8 @@
               "missing": 0,
               "description": "Authority issuing the administrative approval (e.g., Block Development Officer)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2022_PL",
@@ -6913,7 +6961,8 @@
               "missing": 0,
               "description": "Delegated Execution Metadata: Perent Planning Unit Cd"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2022_PP",
@@ -6991,7 +7040,8 @@
               "missing": 0,
               "description": "Represents the Physicalprogressassetstageuploadwebservice"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2022_RE",
@@ -7024,7 +7074,8 @@
               "missing": 0,
               "description": "Unique code for the planning unit (e.g., GP Code)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2022_TA",
@@ -7084,7 +7135,8 @@
               "missing": 0,
               "description": "Date of the Technical Approval Order."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2023-2024",
@@ -7234,7 +7286,8 @@
               "missing": 0,
               "description": "Represents the Opening Balance"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2023_AA",
@@ -7303,7 +7356,8 @@
               "missing": 0,
               "description": "Authority issuing the administrative approval (e.g., Block Development Officer)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2023_PL",
@@ -7606,7 +7660,8 @@
               "missing": 0,
               "description": "Delegated Execution Metadata: Perent Planning Unit Cd"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2023_PP",
@@ -7684,7 +7739,8 @@
               "missing": 0,
               "description": "Represents the Physicalprogressassetstageuploadwebservice"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2023_RE",
@@ -7717,7 +7773,8 @@
               "missing": 0,
               "description": "Unique code for the planning unit (e.g., GP Code)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2023_TA",
@@ -7777,7 +7834,8 @@
               "missing": 0,
               "description": "Date of the Technical Approval Order."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2024-2025",
@@ -7927,7 +7985,8 @@
               "missing": 0,
               "description": "Represents the Opening Balance"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2024_AA",
@@ -7996,7 +8055,8 @@
               "missing": 0,
               "description": "Authority issuing the administrative approval (e.g., Block Development Officer)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2024_PL",
@@ -8299,7 +8359,8 @@
               "missing": 0,
               "description": "Delegated Execution Metadata: Perent Planning Unit Cd"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2024_PP",
@@ -8377,7 +8438,8 @@
               "missing": 0,
               "description": "Represents the Physicalprogressassetstageuploadwebservice"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2024_RE",
@@ -8410,7 +8472,8 @@
               "missing": 0,
               "description": "Unique code for the planning unit (e.g., GP Code)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2024_TA",
@@ -8470,7 +8533,8 @@
               "missing": 0,
               "description": "Date of the Technical Approval Order."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2025-2026",
@@ -8620,7 +8684,8 @@
               "missing": 0,
               "description": "Represents the Opening Balance"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2025_AA",
@@ -8689,7 +8754,8 @@
               "missing": 0,
               "description": "Authority issuing the administrative approval (e.g., Block Development Officer)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2025_PL",
@@ -8992,7 +9058,8 @@
               "missing": 0,
               "description": "Delegated Execution Metadata: Perent Planning Unit Cd"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2025_PP",
@@ -9070,7 +9137,8 @@
               "missing": 0,
               "description": "Represents the Physicalprogressassetstageuploadwebservice"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2025_RE",
@@ -9103,7 +9171,8 @@
               "missing": 0,
               "description": "Unique code for the planning unit (e.g., GP Code)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "2025_TA",
@@ -9163,7 +9232,8 @@
               "missing": 0,
               "description": "Date of the Technical Approval Order."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Accounting_vouchers_flat",
@@ -9331,7 +9401,8 @@
               "missing": 0,
               "description": "Represents the Year Total Payments"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Activity_wise_Expenditure_20gps_Schema",
@@ -9544,7 +9615,8 @@
               "missing": 0,
               "description": "Represents the Voucher Cost"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "DOCX_Files",
@@ -9559,7 +9631,8 @@
               "missing": 0,
               "description": "Word document (.docx/.doc) containing administrative data schemas, technical object mappings, or scraper documentation"
             }
-          ]
+          ],
+          "tableType": "auxiliary"
         },
         {
           "name": "PDF_Files",
@@ -9574,7 +9647,8 @@
               "missing": 0,
               "description": "Unstructured PDF documents containing Panchayat agendas and MoMs"
             }
-          ]
+          ],
+          "tableType": "auxiliary"
         },
         {
           "name": "PL",
@@ -10363,7 +10437,8 @@
               "missing": 0,
               "description": "NSAP Beneficiary Demographics: Widow Transgender"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "andhrua_vouchers",
@@ -10423,7 +10498,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "bandhpali_vouchers",
@@ -10483,7 +10559,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "barimunda_vouchers",
@@ -10543,7 +10620,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "bhatigaon_vouchers",
@@ -10603,7 +10681,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "bheden_vouchers",
@@ -10663,7 +10742,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "biswamathpur_vouchers",
@@ -10723,7 +10803,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "boipariguda_vouchers",
@@ -10783,7 +10864,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "chikilli_vouchers",
@@ -10843,7 +10925,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "code_descriptions_updated",
@@ -10876,7 +10959,8 @@
               "missing": 0,
               "description": "Represents the Codes Desc"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "dadhapatna_vouchers",
@@ -10936,7 +11020,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "dutimendi_vouchers",
@@ -10996,7 +11081,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "eGramSwaraj_panchayat_filtered_20_Panchayats",
@@ -11893,7 +11979,8 @@
               "missing": 0,
               "description": "Represents the Sports No Of Volleyball Court"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "eGramSwaraj_panchayat_master",
@@ -12790,7 +12877,8 @@
               "missing": 0,
               "description": "Represents the Sports No Of Volleyball Court"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_aa",
@@ -12904,7 +12992,8 @@
               "missing": 0,
               "description": "Authority issuing the administrative approval (e.g., Block Development Officer)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_aa__admapprovalschemewebservice",
@@ -13000,7 +13089,8 @@
               "missing": 0,
               "description": "Total fund allocated for this scheme."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_aa__admapprovalschemewebservice_filtered",
@@ -13096,7 +13186,8 @@
               "missing": 0,
               "description": "Total fund allocated for this scheme."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_aa_filtered",
@@ -13210,7 +13301,8 @@
               "missing": 0,
               "description": "Authority issuing the administrative approval (e.g., Block Development Officer)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_pl",
@@ -14017,7 +14109,8 @@
               "missing": 0,
               "description": "Represents the Assetdetails Assetlocationdetails"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_pl_older",
@@ -14635,7 +14728,8 @@
               "missing": 0,
               "description": "NSAP Beneficiary Demographics: Activitynsap Window Transgender"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_pp__physicalprogressassetstageuploadwebservice",
@@ -14713,7 +14807,8 @@
               "missing": 0,
               "description": "Numeric code indicating the Local Body or Land Region Type of the planning unit. The values map as follows: 1 = District Panchayat & Equivalent 2 = Block Panchayat & Equivalent 3 = Village Panchayat & Equivalent 4 = District 5 = Subdistrict/Block  6= Village"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_pp__physicalprogressassetstageuploadwebservice_filtered",
@@ -14791,7 +14886,8 @@
               "missing": 0,
               "description": "Numeric code indicating the Local Body or Land Region Type of the planning unit. The values map as follows: 1 = District Panchayat & Equivalent 2 = Block Panchayat & Equivalent 3 = Village Panchayat & Equivalent 4 = District 5 = Subdistrict/Block  6= Village"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_pp__physicalprogressassetstagewebservice",
@@ -14860,7 +14956,8 @@
               "missing": 0,
               "description": "Date of completion for this specific stage."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_re",
@@ -14938,7 +15035,8 @@
               "missing": 0,
               "description": "Unique code for the planning unit (e.g., GP Code)."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_ta",
@@ -15052,7 +15150,8 @@
               "missing": 0,
               "description": "Date of the Technical Approval Order."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "egramswaraj_ta_filtered",
@@ -15166,7 +15265,8 @@
               "missing": 0,
               "description": "Date of the Technical Approval Order."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "expenditure_all",
@@ -15379,7 +15479,8 @@
               "missing": 0,
               "description": "Represents the Voucher Cost"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "govindapur_vouchers",
@@ -15439,7 +15540,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "haldikudar_vouchers",
@@ -15499,7 +15601,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "hirlipali_vouchers",
@@ -15559,7 +15662,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "itipur_vouchers",
@@ -15619,7 +15723,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "kalimela_vouchers",
@@ -15679,7 +15784,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "kalyansinghpur_vouchers",
@@ -15739,7 +15845,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "kantabnada_vouchers",
@@ -15799,7 +15906,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "karuabahal_vouchers",
@@ -15859,7 +15967,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "laxmipur_vouchers",
@@ -15919,7 +16028,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "mendarajpur_vouchers",
@@ -15979,7 +16089,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "plan_wise_expenditure_Schema",
@@ -16219,7 +16330,8 @@
               "missing": 0,
               "description": "Represents the Voucher Cost"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "sharagada_vouchers",
@@ -16279,7 +16391,8 @@
               "missing": 0,
               "description": "Represents the Years"
             }
-          ]
+          ],
+          "tableType": "base"
         }
       ]
     },
@@ -16428,7 +16541,8 @@
               "description": "Audiovisual recording of open Gram Sabha citizen dialogue on drinking water tube-well renovations and village road concrete paving.",
               "contentSnippet": "Runtime: 18m 42s • Audiovisual session specimen of Sarpanch, Ward Members, and public resolution voting in Odia language."
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Extraction_Audit_Report_20260625_050459",
@@ -16497,7 +16611,8 @@
               "missing": 0,
               "description": "Represents the Details"
             }
-          ]
+          ],
+          "tableType": "base"
         }
       ]
     },
@@ -16563,7 +16678,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Bandhpali_116397",
@@ -16587,7 +16703,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Barimunda_119599",
@@ -16611,7 +16728,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Bhatigaon_116400",
@@ -16635,7 +16753,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Bheden_116438",
@@ -16659,7 +16778,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Biswamathpur_117951",
@@ -16683,7 +16803,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Boipariguda_119717",
@@ -16707,7 +16828,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Chikilli_117835",
@@ -16731,7 +16853,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Dadhapatna_116936",
@@ -16755,7 +16878,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Digitized_MOM_HTML_Files",
@@ -16803,7 +16927,8 @@
               "description": "Classified decision matrix categorizing all discussed proposals into 3-tier actionability (High Priority, Medium Priority, Low Priority).",
               "contentSnippet": "<div class='tier-1'><strong>Tier-1 Action Item:</strong> Solar Street Light Installation at Ward 3 & 7 (Allocated Budget: ₹1,85,000). Executing Officer: Junior Engineer.</div>"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Dutimendi_118939",
@@ -16827,7 +16952,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Govindapur_117153",
@@ -16851,7 +16977,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Haldikudar_121663",
@@ -16875,7 +17002,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Hirlipali_116350",
@@ -16899,7 +17027,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Itipur_119605",
@@ -16923,7 +17052,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Kalimela_119936",
@@ -16947,7 +17077,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Kalyansinghpur_121162",
@@ -16971,7 +17102,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Karuabahal_121526",
@@ -16995,7 +17127,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Laxmipur_119862",
@@ -17019,7 +17152,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Mendarajpur_275075",
@@ -17043,7 +17177,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Sharagada_118012",
@@ -17067,7 +17202,8 @@
               "missing": 0,
               "description": "Represents the Meetings"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "Targeted_Extraction_Audit",
@@ -17127,7 +17263,8 @@
               "missing": 0,
               "description": "Represents the Reason / Notes"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "metadata",
@@ -17169,7 +17306,8 @@
               "missing": 0,
               "description": "Represents the Target Count"
             }
-          ]
+          ],
+          "tableType": "base"
         }
       ]
     },
@@ -17226,7 +17364,8 @@
               "missing": 0,
               "description": "Word document (.docx/.doc) containing administrative data schemas, technical object mappings, or scraper documentation"
             }
-          ]
+          ],
+          "tableType": "auxiliary"
         },
         {
           "name": "PDF_Files",
@@ -17241,7 +17380,8 @@
               "missing": 0,
               "description": "Unstructured PDF documents containing Panchayat agendas and MoMs"
             }
-          ]
+          ],
+          "tableType": "auxiliary"
         }
       ]
     },
@@ -17405,7 +17545,8 @@
               "missing": 0,
               "description": "Represents the Icon Url"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "PDF_Files",
@@ -17420,7 +17561,8 @@
               "missing": 0,
               "description": "Unstructured PDF documents containing Panchayat agendas and MoMs"
             }
-          ]
+          ],
+          "tableType": "auxiliary"
         },
         {
           "name": "odisha_gp_action_plans",
@@ -17615,7 +17757,8 @@
               "missing": 0,
               "description": "Represents the Citizen Approval Pdf"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "odisha_gp_activities",
@@ -17945,7 +18088,8 @@
               "missing": 0,
               "description": "Represents the Unit Type"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "odisha_gp_beneficiaries_welfare_schemes",
@@ -18023,7 +18167,8 @@
               "missing": 0,
               "description": "Represents the Beneficiary Count"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "odisha_gp_funds",
@@ -18146,7 +18291,8 @@
               "missing": 0,
               "description": "Represents the Actual Expenditure"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "odisha_gp_payment_register",
@@ -18395,7 +18541,8 @@
               "missing": 0,
               "description": "Represents the Status"
             }
-          ]
+          ],
+          "tableType": "base"
         },
         {
           "name": "odisha_gp_villages_population",
@@ -18500,9 +18647,17 @@
               "missing": 0,
               "description": "Represents the Population"
             }
-          ]
+          ],
+          "tableType": "base"
         }
       ]
     }
-  ]
+  ],
+  "baseGovernanceTables": 130,
+  "baseGovernanceVariables": 1634,
+  "baseGovernanceRecords": "106,138,761",
+  "derivedViewsCount": 8,
+  "derivedViewsVariables": 236,
+  "derivedViewsRecords": "27,200,000",
+  "auxiliaryFilesCount": 10
 }

@@ -705,11 +705,11 @@ export function CatalogueView() {
                       <div className="grid grid-cols-3 gap-2 mt-2.5 pt-2 border-t border-line/40">
                         <div className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
                           <div className="text-sm font-bold text-teal-deep font-mono leading-tight">{catalogData.totalRecords}</div>
-                          <div className="text-[10px] text-muted-design mt-0.5">Total Repository Records</div>
+                          <div className="text-[10px] text-muted-design mt-0.5">Total Row Instances (106.1M Base)</div>
                         </div>
                         <div className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
                           <div className="text-sm font-bold text-teal-deep font-mono leading-tight">{catalogData.totalTables} Tables • {catalogData.totalVariables} Vars</div>
-                          <div className="text-[10px] text-muted-design mt-0.5">143 Unique Tables • 6 Datasets</div>
+                          <div className="text-[10px] text-muted-design mt-0.5">130 Base Tables • 8 Views • 10 Files</div>
                         </div>
                         <div className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
                           <div className="text-sm font-bold text-teal-deep font-mono leading-tight">6 Integrated Domains</div>
@@ -840,6 +840,17 @@ export function CatalogueView() {
                             <Badge variant="outline" className="text-xs bg-ivory border-line text-muted-design">
                               {currentTableItem.table.variables.length} Variables
                             </Badge>
+                            {currentTableItem.table.tableType && (
+                              <Badge variant="outline" className={`text-xs ${
+                                currentTableItem.table.tableType === "view"
+                                  ? "bg-amber-50 text-amber-800 border-amber-200"
+                                  : currentTableItem.table.tableType === "auxiliary"
+                                  ? "bg-slate-100 text-slate-700 border-slate-300"
+                                  : "bg-emerald-50 text-emerald-800 border-emerald-200"
+                              }`}>
+                                {currentTableItem.table.tableType === "view" ? "Derived View" : currentTableItem.table.tableType === "auxiliary" ? "Auxiliary File" : "Base Table"}
+                              </Badge>
+                            )}
                           </div>
                           <CardDescription className="text-xs text-muted-design mt-1">
                             {currentTableItem.table.description}
@@ -993,7 +1004,7 @@ export function CatalogueView() {
                                   <div className="flex flex-col">
                                     <span>Completeness Gauge</span>
                                     <span className="text-[9px] font-normal text-muted-design">
-                                      {activeDatasetId === "panchayat-database" ? "Exact (SQL Count)" : "Estimated (Sampled)"}
+                                      {currentTableItem?.datasetId === "panchayat-database" ? "Exact (SQL Count)" : "Estimated (Sampled)"}
                                     </span>
                                   </div>
                                 </TableHead>
@@ -1031,7 +1042,7 @@ export function CatalogueView() {
                                               {variable.pctAvailable}
                                             </span>
                                             <span className="text-[10px] text-muted-design">
-                                              {activeDatasetId === "panchayat-database" ? (pctVal >= 99 ? "Complete" : "Partial") : "Estimated"}
+                                              {currentTableItem?.datasetId === "panchayat-database" ? (pctVal >= 99 ? "Complete" : "Partial") : "Estimated"}
                                             </span>
                                           </div>
                                           <div className="w-full bg-line/60 h-1.5 rounded-full overflow-hidden">

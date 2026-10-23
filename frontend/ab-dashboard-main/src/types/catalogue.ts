@@ -27,6 +27,7 @@ export interface TableSchema {
   variables: VariableSchema[];
   sampleRows?: Record<string, string | number>[];
   evidenceArtifacts?: EvidenceArtifact[];
+  tableType?: "base" | "view" | "auxiliary";
 }
 
 export interface DatasetMetricCard {
@@ -66,5 +67,12 @@ export interface MetadataCatalogPayload {
   version: string;
   updatedAt: string;
   governingBody: string;
+  baseGovernanceTables?: number;
+  baseGovernanceVariables?: number;
+  baseGovernanceRecords?: string;
+  derivedViewsCount?: number;
+  derivedViewsVariables?: number;
+  derivedViewsRecords?: string;
+  auxiliaryFilesCount?: number;
   datasets: DatasetCatalog[];
 }
