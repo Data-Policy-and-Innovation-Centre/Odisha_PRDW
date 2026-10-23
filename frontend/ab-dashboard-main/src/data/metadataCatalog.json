@@ -16401,9 +16401,9 @@
       "name": "Panchayat Nirnay",
       "shortName": "Nirnay",
       "category": "Multimodal Governance",
-      "description": "The official digital governance repository of multimodal Gram Sabha proceedings, capturing photographic evidence, meeting notes, attendance records, official resolutions, and video recordings. Audited across the 20 pilot Gram Panchayats (1,319 media files). This dataset provides the empirical verification layer ensuring that local developmental works originate from legitimate, quorate citizen assemblies.",
+      "description": "The official digital governance repository of multimodal Gram Sabha proceedings, capturing photographic records, meeting notes, attendance registers, official resolutions, and video recordings across the 20 pilot Gram Panchayats (1,319 media files). This dataset establishes the multimodal documentation schema for tracking local citizen assemblies and community proceedings.",
       "administrativeSource": "Ministry of Panchayati Raj (MoPR) in collaboration with NIC, supporting nationwide Gram Sabha documentation.",
-      "purpose": "Provides definitive audit evidence for democratic participation and legal compliance. Enables computer vision and multimodal LLM analysis to verify quorum attendance, transcribe handwritten Odia/Hindi meeting notes, extract citizen demands, and cross-reference resolutions with planned expenditures in eGram Swaraj.",
+      "purpose": "Captures multimodal meeting documentation for citizen participation and governance records. Enables computer vision and multimodal LLM analysis to examine attendance registers, transcribe handwritten Odia/Hindi meeting notes, extract citizen demands, and cross-reference resolutions with planned expenditures in eGram Swaraj.",
       "unitOfObservation": "Individual Gram Sabha meeting session, with granular multimodal attachments classified by content type: Attendance Sheets, Meeting Decisions & Notes, Meeting Agendas, Session Photographs, and Video Recordings.",
       "geographicCoverage": "20 Pilot Gram Panchayats across Odisha districts (Bargarh, Sambalpur, Koraput, Rayagada, Malkangiri, etc.).",
       "temporalCoverage": "Meetings registered and conducted between 2024 and 2026.",
@@ -16475,7 +16475,7 @@
               "available": 284,
               "pctAvailable": "100.00%",
               "missing": 0,
-              "description": "Photographic documentation of the Gram Sabha assembly in session, verifying democratic quorum and public deliberation"
+              "description": "Photographic documentation of the Gram Sabha assembly in session, capturing meeting proceedings and citizen attendance"
             },
             {
               "name": "Gram_Sabha_Video_Recording",
@@ -16518,8 +16518,8 @@
               "district": "Khordha",
               "date": "02 Oct 2024 (Gandhi Jayanti)",
               "fileSize": "2.84 MB (JPEG, 4032x3024)",
-              "description": "High-resolution photographic capture of physical Gram Sabha attendance register showing physical presence, attendee signatures, and thumbprints.",
-              "contentSnippet": "Resolution No: 4/2024 • Quorum Record: 84 attending villagers (42 female, 42 male) • Gram Panchayat resolution format specimen."
+              "description": "Representative demonstration capture of physical Gram Sabha attendance register schema showing layout, attendee signature fields, and resolution structure.",
+              "contentSnippet": "Demonstration Resolution Format • Attendance Register & Signatures Layout Specimen • Illustrative multimodal document schema."
             },
             {
               "title": "Handwritten Meeting Decisions & Notes Scan",
@@ -16528,8 +16528,8 @@
               "district": "Bargarh",
               "date": "26 Nov 2024 (Constitution Day)",
               "fileSize": "3.12 MB (JPEG, 3840x2160)",
-              "description": "Photographic record of official handwritten Gram Sabha meeting notes, deliberations, and developmental scheme resolutions recorded by PEO.",
-              "contentSnippet": "Agenda 2: Approval of Annual GPDP for FY 2025-26. 18 community projects prioritized across 12 wards totaling ₹48.5 Lakhs."
+              "description": "Representative demonstration record of handwritten Gram Sabha meeting notes and developmental proposal schema structure.",
+              "contentSnippet": "Illustrative Agenda Item: Annual GPDP proposal deliberations across ward committees • Demonstration schema structure."
             },
             {
               "title": "Official Gram Sabha Video Proceeding Log",
@@ -16538,8 +16538,8 @@
               "district": "Ganjam",
               "date": "15 Aug 2024 (Independence Day)",
               "fileSize": "48.6 MB (MP4, 1080p H.264)",
-              "description": "Audiovisual recording of open Gram Sabha citizen dialogue on drinking water tube-well renovations and village road concrete paving.",
-              "contentSnippet": "Runtime: 18m 42s • Audiovisual session specimen of Sarpanch, Ward Members, and public resolution voting in Odia language."
+              "description": "Demonstration audiovisual recording metadata schema of open Gram Sabha citizen proceedings and deliberation logging.",
+              "contentSnippet": "Audiovisual session schema specimen demonstrating deliberation capture, speaker logging, and resolution metadata in Odia."
             }
           ],
           "tableType": "base"
@@ -16914,8 +16914,8 @@
               "district": "Khordha",
               "date": "02 Oct 2024",
               "fileSize": "14.2 KB (Structured HTML)",
-              "description": "Digitized, clean HTML transcript transcribed from raw meeting notes, classifying agenda topics, attendee consensus, and passed resolutions.",
-              "contentSnippet": "<h3>ଗ୍ରାମ ସଭା ବିବରଣୀ (Gram Sabha Minutes)</h3><p><strong>ମୁଖ୍ୟ ବିଷୟ:</strong> ପାନୀୟ ଜଳ ଯୋଗାଣ ପ୍ରକଳ୍ପ ଅନୁମୋଦନ। ୧୫ତମ ଅର୍ଥ କମିଶନ ଅନୁଦାନରୁ ₹୩,୪୫,୨୦୦ ବ୍ୟୟ ଅଟକଳ ସର୍ବସମ୍ମତିକ୍ରମେ ଗୃହୀତ।</p>"
+              "description": "Representative demonstration HTML transcript illustrating transcription schema, categorized agenda topics, attendee consensus, and passed resolutions.",
+              "contentSnippet": "<h3>ଗ୍ରାମ ସଭା ବିବରଣୀ (Gram Sabha Minutes - Illustrative Specimen)</h3><p><strong>ମୁଖ୍ୟ ବିଷୟ:</strong> ପାନୀୟ ଜଳ ଯୋଗାଣ ପ୍ରକଳ୍ପ ଅନୁମୋଦନ। ୧୫ତମ ଅର୍ଥ କମିଶନ ଅନୁଦାନ ବ୍ୟୟ ଅଟକଳ ପ୍ରସ୍ତାବ ସର୍ବସମ୍ମତିକ୍ରମେ ଗୃହୀତ।</p>"
             },
             {
               "title": "Action Items & Urgency Evaluation Matrix",
@@ -16924,8 +16924,8 @@
               "district": "Bargarh",
               "date": "26 Nov 2024",
               "fileSize": "11.8 KB (Structured HTML)",
-              "description": "Classified decision matrix categorizing all discussed proposals into 3-tier actionability (High Priority, Medium Priority, Low Priority).",
-              "contentSnippet": "<div class='tier-1'><strong>Tier-1 Action Item:</strong> Solar Street Light Installation at Ward 3 & 7 (Allocated Budget: ₹1,85,000). Executing Officer: Junior Engineer.</div>"
+              "description": "Representative demonstration decision matrix illustrating classification schema of proposals across actionability tiers.",
+              "contentSnippet": "<div class='tier-1'><strong>Tier-1 Action Item (Illustrative Specimen):</strong> Community infrastructure installation proposal • Demonstration actionability matrix schema.</div>"
             }
           ],
           "tableType": "base"

@@ -349,7 +349,7 @@ export function CatalogueView() {
               </Badge>
             </div>
             <p className="text-xs text-muted-design mt-0.5 max-w-4xl">
-              Authoritative reference catalogue for Odisha rural governance datasets. Audited across 20 pilot Gram Panchayats (multimodal Gram Sabha media, MoMs, and local registers) and all 6,794 GPs statewide (financial planning, vouchers, and core database).
+              Authoritative reference catalogue for Odisha rural governance datasets covering statewide financial planning, vouchers, and core administrative databases, alongside pilot multimodal document schemas.
             </p>
           </div>
 
@@ -381,7 +381,7 @@ export function CatalogueView() {
               <Layers size={14} />
             </div>
             <div>
-              <div className="text-[11px] text-muted-design font-medium leading-none">Audited Datasets</div>
+              <div className="text-[11px] text-muted-design font-medium leading-none">Catalogued Datasets</div>
               <div className="text-xs font-semibold text-ink mt-0.5">{catalogData.totalDatasets} Domains</div>
             </div>
           </div>
@@ -944,7 +944,7 @@ export function CatalogueView() {
                                 <TableHead className="w-28 text-right text-xs font-semibold text-ink">Total Records</TableHead>
                                 <TableHead className="w-40 text-xs font-semibold text-ink">
                                   <div className="flex flex-col">
-                                    <span>Completeness Gauge</span>
+                                    <span>{currentTableItem?.datasetId === "panchayat-database" ? "Availability" : "Availability (Est.)"}</span>
                                     <span className="text-[9px] font-normal text-muted-design">
                                       {currentTableItem?.datasetId === "panchayat-database" ? "Exact (SQL Count)" : "Estimated (Sampled)"}
                                     </span>
@@ -981,7 +981,7 @@ export function CatalogueView() {
                                         <div className="flex flex-col gap-1">
                                           <div className="flex items-center justify-between text-[11px] font-mono">
                                             <span className={pctVal >= 99 ? "text-emerald-700 font-semibold" : "text-amber-700 font-semibold"}>
-                                              {variable.pctAvailable}
+                                              {currentTableItem?.datasetId === "panchayat-database" ? variable.pctAvailable : `~${variable.pctAvailable}`}
                                             </span>
                                             <span className="text-[10px] text-muted-design">
                                               {currentTableItem?.datasetId === "panchayat-database" ? (pctVal >= 99 ? "Complete" : "Partial") : "Estimated"}
@@ -1173,7 +1173,7 @@ export function CatalogueView() {
                       <span className="text-[11px] font-bold text-ink uppercase tracking-wide">
                         Government of Odisha • Panchayati Raj &amp; Drinking Water
                       </span>
-                      <span className="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 font-mono">Representative Specimen</span>
+                      <span className="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200 font-mono">Illustrative Document Specimen</span>
                     </div>
                     <div className="text-xs font-semibold text-ink">{inspectedArtifact.gpName}</div>
                     <div className="text-[11px] text-muted-design font-mono leading-relaxed bg-ivory/80 p-2.5 rounded border border-line/60">
@@ -1181,7 +1181,7 @@ export function CatalogueView() {
                     </div>
                     <div className="text-[10px] text-muted-design flex items-center justify-between pt-1">
                       <span>Recorded Date: {inspectedArtifact.date}</span>
-                      <span className="text-muted-design font-medium">Demonstration schema extraction format</span>
+                      <span className="text-muted-design font-medium">Illustrative demonstration specimen</span>
                     </div>
                   </div>
                 ) : inspectedArtifact.type === "HTML" ? (
@@ -1224,7 +1224,7 @@ export function CatalogueView() {
                   <div className="font-mono text-ink mt-0.5">{inspectedArtifact.fileSize}</div>
                 </div>
                 <div className="col-span-2">
-                  <span className="text-muted-design text-[11px]">Audit Classification:</span>
+                  <span className="text-muted-design text-[11px]">Specimen Classification:</span>
                   <div className="text-ink mt-0.5 text-[11px] leading-relaxed">{inspectedArtifact.description}</div>
                 </div>
               </div>
