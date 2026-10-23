@@ -989,7 +989,14 @@ export function CatalogueView() {
                                 <TableHead className="w-52 text-xs font-semibold text-ink">Field Name</TableHead>
                                 <TableHead className="w-36 text-xs font-semibold text-ink">Data Type</TableHead>
                                 <TableHead className="w-28 text-right text-xs font-semibold text-ink">Total Records</TableHead>
-                                <TableHead className="w-36 text-xs font-semibold text-ink">Completeness Gauge</TableHead>
+                                <TableHead className="w-40 text-xs font-semibold text-ink">
+                                  <div className="flex flex-col">
+                                    <span>Completeness Gauge</span>
+                                    <span className="text-[9px] font-normal text-muted-design">
+                                      {activeDatasetId === "panchayat-database" ? "Exact (SQL Count)" : "Estimated (Sampled)"}
+                                    </span>
+                                  </div>
+                                </TableHead>
                                 <TableHead className="text-xs font-semibold text-ink">Description &amp; Standards Note</TableHead>
                               </TableRow>
                             </TableHeader>
@@ -1024,7 +1031,7 @@ export function CatalogueView() {
                                               {variable.pctAvailable}
                                             </span>
                                             <span className="text-[10px] text-muted-design">
-                                              {pctVal >= 99 ? "Complete" : "Partial"}
+                                              {activeDatasetId === "panchayat-database" ? (pctVal >= 99 ? "Complete" : "Partial") : "Estimated"}
                                             </span>
                                           </div>
                                           <div className="w-full bg-line/60 h-1.5 rounded-full overflow-hidden">
@@ -1057,10 +1064,10 @@ export function CatalogueView() {
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-1.5 text-xs text-muted-design">
                               <Sparkles size={14} className="text-teal-deep" />
-                              <span>Representative sample rows extracted from {currentTableItem.table.name} data records.</span>
+                              <span>Illustrative sample preview formatted to reflect {currentTableItem.table.name} schema specifications.</span>
                             </div>
                             <Badge variant="outline" className="text-[10px] bg-teal-deep/5 text-teal-deep border-teal-deep/20 font-medium">
-                              {sampleRowsData.length} Representative Rows
+                              Illustrative Preview ({sampleRowsData.length} Rows)
                             </Badge>
                           </div>
                         ) : (

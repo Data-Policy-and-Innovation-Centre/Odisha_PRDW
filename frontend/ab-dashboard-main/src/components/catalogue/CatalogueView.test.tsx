@@ -68,8 +68,8 @@ describe("CatalogueView Component", () => {
     fireEvent.click(sampleModeBtn);
 
     // Verify verified sample data banner and table appear
-    expect(screen.getByText(/Representative sample rows extracted from activity_asset/i)).toBeInTheDocument();
-    expect(screen.getByText(/2 Representative Rows/i)).toBeInTheDocument();
+    expect(screen.getByText(/Illustrative sample preview formatted to reflect activity_asset/i)).toBeInTheDocument();
+    expect(screen.getByText(/Illustrative Preview \(2 Rows\)/i)).toBeInTheDocument();
   });
 
   it("displays synthetic preview alert and badge for tables without verified sample rows", () => {
