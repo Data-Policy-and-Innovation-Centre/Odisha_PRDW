@@ -355,7 +355,10 @@ export function CatalogueView() {
   const handleCopySQL = () => {
     if (!currentTableItem) return;
     const t = currentTableItem.table;
-    const cols = t.variables.slice(0, 6).map((v) => quoteSqlIdentifier(v.name)).join(", ");
+    const cols =
+      t.variables.length > 0
+        ? t.variables.slice(0, 6).map((v) => quoteSqlIdentifier(v.name)).join(", ")
+        : "*";
     const quotedTable = quoteSqlIdentifier(t.name);
     const sql = `-- Query ${t.name} from Odisha PR&DW Analytical Database\nSELECT ${cols}\nFROM ${quotedTable}\nLIMIT 100;`;
     navigator.clipboard.writeText(sql);
@@ -702,7 +705,7 @@ export function CatalogueView() {
                       <div className="grid grid-cols-3 gap-2 mt-2.5 pt-2 border-t border-line/40">
                         <div className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
                           <div className="text-sm font-bold text-teal-deep font-mono leading-tight">{catalogData.totalRecords}</div>
-                          <div className="text-[10px] text-muted-design mt-0.5">Audited Statewide Records</div>
+                          <div className="text-[10px] text-muted-design mt-0.5">Total Repository Records</div>
                         </div>
                         <div className="bg-ivory/60 border border-line/80 rounded p-1.5 text-center">
                           <div className="text-sm font-bold text-teal-deep font-mono leading-tight">{catalogData.totalTables} Tables • {catalogData.totalVariables} Vars</div>
