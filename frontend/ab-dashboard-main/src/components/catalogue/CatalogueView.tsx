@@ -228,73 +228,10 @@ export function CatalogueView() {
     return Boolean(currentTableItem?.table.sampleRows && currentTableItem.table.sampleRows.length > 0);
   }, [currentTableItem]);
 
-  // Generates or retrieves sample rows for any table
+  // Retrieves sample rows exclusively for tables that supply sample data
   const sampleRowsData = useMemo(() => {
     if (!currentTableItem) return [];
-    if (currentTableItem.table.sampleRows && currentTableItem.table.sampleRows.length > 0) {
-      return currentTableItem.table.sampleRows;
-    }
-
-    // Dynamic fallback generation based on the table's actual schema (explicitly labeled as synthetic)
-    const gps = [
-      { name: "Andhrua", code: 119598, dist: "Khordha", block: "Bhubaneswar" },
-      { name: "Bheden", code: 116438, dist: "Bargarh", block: "Bheden" },
-      { name: "Chikilli", code: 117835, dist: "Ganjam", block: "Rangeilunda" },
-    ];
-
-    const row1: Record<string, string | number> = {};
-    const row2: Record<string, string | number> = {};
-    const row3: Record<string, string | number> = {};
-
-    currentTableItem.table.variables.slice(0, 8).forEach((v, idx) => {
-      const key = v.name;
-      const lower = key.toLowerCase();
-      const type = v.type.toUpperCase();
-
-      if (lower.includes("lgd") || lower.includes("gp_code")) {
-        row1[key] = gps[0].code;
-        row2[key] = gps[1].code;
-        row3[key] = gps[2].code;
-      } else if (lower.includes("gp_name") || lower.includes("panchayat")) {
-        row1[key] = gps[0].name;
-        row2[key] = gps[1].name;
-        row3[key] = gps[2].name;
-      } else if (lower.includes("district")) {
-        row1[key] = gps[0].dist;
-        row2[key] = gps[1].dist;
-        row3[key] = gps[2].dist;
-      } else if (lower.includes("year") || lower.includes("fiscal")) {
-        row1[key] = "2024-2025";
-        row2[key] = "2024-2025";
-        row3[key] = "2023-2024";
-      } else if (lower.includes("date")) {
-        row1[key] = "2024-10-15";
-        row2[key] = "2024-11-20";
-        row3[key] = "2024-12-05";
-      } else if (lower.includes("amount") || lower.includes("expenditure") || lower.includes("cost") || lower.includes("fund")) {
-        row1[key] = "₹2,45,000";
-        row2[key] = "₹4,80,000";
-        row3[key] = "₹1,65,500";
-      } else if (lower.includes("id") || lower.includes("code") || lower.includes("no") || lower.includes("pk")) {
-        row1[key] = `${key.slice(0, 4).toUpperCase()}_9041`;
-        row2[key] = `${key.slice(0, 4).toUpperCase()}_9042`;
-        row3[key] = `${key.slice(0, 4).toUpperCase()}_9043`;
-      } else if (type.includes("INT") || type.includes("NUM")) {
-        row1[key] = (idx + 1) * 14;
-        row2[key] = (idx + 1) * 28;
-        row3[key] = (idx + 1) * 42;
-      } else if (type.includes("DOUBLE") || type.includes("FLOAT")) {
-        row1[key] = (idx * 1.5 + 2.5).toFixed(2);
-        row2[key] = (idx * 2.0 + 3.0).toFixed(2);
-        row3[key] = (idx * 1.2 + 1.8).toFixed(2);
-      } else {
-        row1[key] = "Sample_Val_A";
-        row2[key] = "Sample_Val_B";
-        row3[key] = "Sample_Val_C";
-      }
-    });
-
-    return [row1, row2, row3];
+    return currentTableItem.table.sampleRows || [];
   }, [currentTableItem]);
 
   // Checks if the current table actually owns unstructured evidence artifacts
@@ -310,12 +247,15 @@ export function CatalogueView() {
     return currentTableItem?.table.evidenceArtifacts || [];
   }, [currentTableItem]);
 
-  // If active table has no evidence artifacts, automatically fallback viewMode to schema
+  // If active table has no evidence artifacts or sample rows, automatically fallback viewMode to schema
   useEffect(() => {
     if (viewMode === "evidence" && !hasEvidenceArtifacts) {
       setViewMode("schema");
     }
-  }, [hasEvidenceArtifacts, viewMode]);
+    if (viewMode === "sample" && !hasRealSampleRows) {
+      setViewMode("schema");
+    }
+  }, [hasEvidenceArtifacts, hasRealSampleRows, viewMode]);
 
   // Export current table schema as CSV
   const handleExportCSV = () => {
@@ -906,18 +846,20 @@ export function CatalogueView() {
                             <span>Schema Dictionary ({currentTableItem.table.variables.length})</span>
                           </button>
 
-                          <button
-                            data-testid="viewmode-sample"
-                            onClick={() => setViewMode("sample")}
-                            className={`px-3 py-1 text-xs font-medium rounded-md transition-all flex items-center gap-1.5 ${
-                              viewMode === "sample"
-                                ? "bg-white text-teal-deep shadow-xs font-semibold"
-                                : "text-muted-design hover:text-ink"
-                            }`}
-                          >
-                            <TableIcon size={13} />
-                            <span>Sample Data Preview ({hasRealSampleRows ? `${sampleRowsData.length} Rows` : "Synthetic Preview"})</span>
-                          </button>
+                          {hasRealSampleRows && (
+                            <button
+                              data-testid="viewmode-sample"
+                              onClick={() => setViewMode("sample")}
+                              className={`px-3 py-1 text-xs font-medium rounded-md transition-all flex items-center gap-1.5 ${
+                                viewMode === "sample"
+                                  ? "bg-white text-teal-deep shadow-xs font-semibold"
+                                  : "text-muted-design hover:text-ink"
+                              }`}
+                            >
+                              <TableIcon size={13} />
+                              <span>Sample Data Preview ({sampleRowsData.length} Rows)</span>
+                            </button>
+                          )}
 
                           {hasEvidenceArtifacts && (
                             <button
@@ -1069,39 +1011,17 @@ export function CatalogueView() {
                     )}
 
                     {/* Mode 2: Sample Data Preview View */}
-                    {viewMode === "sample" && (
+                    {viewMode === "sample" && hasRealSampleRows && (
                       <CardContent className="p-4 space-y-3">
-                        {hasRealSampleRows ? (
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-1.5 text-xs text-muted-design">
-                              <Sparkles size={14} className="text-teal-deep" />
-                              <span>Illustrative sample preview formatted to reflect {currentTableItem.table.name} schema specifications.</span>
-                            </div>
-                            <Badge variant="outline" className="text-[10px] bg-teal-deep/5 text-teal-deep border-teal-deep/20 font-medium">
-                              Illustrative Preview ({sampleRowsData.length} Rows)
-                            </Badge>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5 text-xs text-muted-design">
+                            <Sparkles size={14} className="text-teal-deep" />
+                            <span>Illustrative sample preview formatted to reflect {currentTableItem.table.name} schema specifications.</span>
                           </div>
-                        ) : (
-                          <div className="space-y-2">
-                            <div className="p-3 bg-amber-50/90 border border-amber-200 rounded-md text-xs flex items-start gap-2.5 text-amber-900">
-                              <AlertTriangle size={16} className="text-amber-600 mt-0.5 flex-shrink-0" />
-                              <div className="space-y-0.5">
-                                <div className="font-semibold text-amber-950">Synthetic Schema Preview</div>
-                                <div className="text-amber-800 leading-relaxed">
-                                  No raw sample rows are supplied in the catalogue payload for this table. The preview below displays synthetic values synthesized from column data types to illustrate schema structure and formatting. They are not audited or real data records.
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex items-center justify-between pt-1">
-                              <div className="text-[11px] text-muted-design italic">
-                                Synthetic fallback rows based on schema types:
-                              </div>
-                              <Badge variant="outline" className="text-[10px] bg-amber-50 text-amber-800 border-amber-300 font-medium">
-                                Synthetic Preview ({sampleRowsData.length} Rows)
-                              </Badge>
-                            </div>
-                          </div>
-                        )}
+                          <Badge variant="outline" className="text-[10px] bg-teal-deep/5 text-teal-deep border-teal-deep/20 font-medium">
+                            Illustrative Preview ({sampleRowsData.length} Rows)
+                          </Badge>
+                        </div>
 
                         <div className="border border-line rounded-lg overflow-x-auto bg-white shadow-xs">
                           <Table>

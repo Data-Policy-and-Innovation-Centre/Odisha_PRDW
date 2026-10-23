@@ -72,21 +72,18 @@ describe("CatalogueView Component", () => {
     expect(screen.getByText(/Illustrative Preview \(2 Rows\)/i)).toBeInTheDocument();
   });
 
-  it("displays synthetic preview alert and badge for tables without verified sample rows", () => {
+  it("restricts Sample Data Preview button strictly to tables with sample rows (hides on tables without samples)", () => {
     render(<CatalogueView />);
+
+    // Default table activity_asset has real sample rows -> button exists
+    expect(screen.getByTestId("viewmode-sample")).toBeInTheDocument();
 
     // Click a table without sample rows (e.g., activity_community_service)
     const tableBtn = screen.getByTestId("table-btn-activity_community_service");
     fireEvent.click(tableBtn);
 
-    // Click Sample Data Preview
-    const sampleModeBtn = screen.getByTestId("viewmode-sample");
-    fireEvent.click(sampleModeBtn);
-
-    // Verify synthetic banner and warning appear
-    expect(screen.getByText(/Synthetic Schema Preview/i)).toBeInTheDocument();
-    expect(screen.getByText(/No raw sample rows are supplied in the catalogue payload for this table/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/Synthetic Preview/i).length).toBeGreaterThanOrEqual(1);
+    // Verify sample mode button is hidden when no sample rows are supplied
+    expect(screen.queryByTestId("viewmode-sample")).not.toBeInTheDocument();
   });
 
   it("restricts Evidence Artifacts view mode button strictly to tables with artifacts", () => {
